@@ -15,6 +15,6 @@ http://www.met.fu-berlin.de/de/wetter/service/obs_10381/
 
 ###How its work
 
-1. Downloading files from the data source. Change the confusing names. And uploading the files to the zedat server.
+1. Downloading files from the data source. Change the confusing names. And uploading the files to the zedat server. The bash script is located in the getReports directory.
 
 2. PHP script run every 120 sec and actually do complete checking, error output, and the website layout (with css file).
