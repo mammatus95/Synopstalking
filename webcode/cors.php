@@ -19,7 +19,7 @@
       $value_s="y: [";
       $value_n="y: [";
       $x_value="x: [";
-      $n=40;
+      $n=30;
       $sum=0;
       $max=0;
       for ($i = 0; $i <= $n; $i++) {
