@@ -702,6 +702,12 @@ function test_ww($ww,$W1,$W2,$h,$vv,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$error_
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Nachwetter fehlt.</br>";
     }
+
+    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and (($W1_1 != $W1_2) or ($W1_1 != $W2_1) or ($W1_1 != $W2_2) or ($ww_2[0] != $ww[0]) or ($ww_1[0] != $ww[0]) or ($ww_3[0] != $ww[0]) )){
+      $fW2="<b class=\"alert\">" . $W2 . "</b>";
+      $error_message .= "s müssen verschiedene W berücksichtig</br>werden für den Wetterverlauf der letzten 3h.</br>";
+    }
+
   }elseif ( ($hour ==  "00") or ($hour ==  "06") or ($hour ==  "12") or ($hour == "18")){
     list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
     list ($ww_2, $W1_2, $W2_2) = getww(sprintf("obs_".$day."%02s.txt", $hour-2));
@@ -716,9 +722,11 @@ function test_ww($ww,$W1,$W2,$h,$vv,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$error_
     }
     if (($W1 < $W1_3) and ($W1 != 1)){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
+      $error_message .= "W1 < W1 von vor 3h.</br>";
     }
     if (($W2 < $W2_3) and ($W2 != 1) and ($W2_3 != $W1_3)){
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
+      $error_message .= "W2 < W2 von vor 3h.</br>";
     }
     if ( (($ww_1 > 90) or ($ww_2 > 90) or ($ww_3 > 90) or ($ww_4 > 90) or ($ww_5 > 90) or ($ww_6 > 94)) and ($W1 != 9) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
@@ -737,6 +745,11 @@ function test_ww($ww,$W1,$W2,$h,$vv,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$error_
     if (($ww_1 > 30) and ($ww < 17)){
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Nachwetter fehlt.</br>";
+    }
+
+    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and (($W1_1 != $W1_2) or ($W1_1 != $W2_1) or ($W1_1 != $W2_2) or ($ww_2[0] != $ww[0]) or ($ww_1[0] != $ww[0]) or ($ww_3[0] != $ww[0]) or ($ww_4[0] != $ww[0]) or ($ww_5[0] != $ww[0]) or ($ww_6[0] != $ww[0]) )){
+      $fW2="<b class=\"alert\">" . $W2 . "</b>";
+      $error_message .= "s müssen verschiedene W berücksichtig</br>werden für den Wetterverlauf der letzten 6h.</br>";
     }
   }else{
     list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
