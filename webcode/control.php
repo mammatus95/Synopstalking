@@ -703,9 +703,9 @@ function test_ww($ww,$W1,$W2,$h,$vv,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$error_
       $error_message .= "Nachwetter fehlt.</br>";
     }
 
-    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and (($W1_1 != $W1_2) or ($W1_1 != $W2_1) or ($W1_1 != $W2_2) or ($ww_2[0] != $ww[0]) or ($ww_1[0] != $ww[0]) or ($ww_3[0] != $ww[0]) )){
+    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and ($W1 > 2) and (($W1 != $W1_1 and $W1_1 > 2) or ($W1 != $W1_2 and $W1_2 > 2) or ($W1 != $W2_1 and $W2_1 > 2) or ($W1 != $W2_2 and $W2_2 > 2 ) or ($ww_2[0] != $ww[0] and $ww_2[0] > 4) or ($ww_1[0] != $ww[0] and $ww_1[0] > 4) or ($ww_3[0] != $ww[0] and $ww_3[0] > 4) ) ){
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "s müssen verschiedene W berücksichtig</br>werden für den Wetterverlauf der letzten 3h.</br>";
+      $error_message .= "Es m&uuml;ssen verschiedene W ber&uuml;cksichtig</br>werden f&uuml;r den Wetterverlauf der letzten 3h.</br>";
     }
 
   }elseif ( ($hour ==  "00") or ($hour ==  "06") or ($hour ==  "12") or ($hour == "18")){
@@ -747,10 +747,11 @@ function test_ww($ww,$W1,$W2,$h,$vv,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$error_
       $error_message .= "Nachwetter fehlt.</br>";
     }
 
-    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and (($W1_1 != $W1_2) or ($W1_1 != $W2_1) or ($W1_1 != $W2_2) or ($ww_2[0] != $ww[0]) or ($ww_1[0] != $ww[0]) or ($ww_3[0] != $ww[0]) or ($ww_4[0] != $ww[0]) or ($ww_5[0] != $ww[0]) or ($ww_6[0] != $ww[0]) )){
-      $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "s müssen verschiedene W berücksichtig</br>werden für den Wetterverlauf der letzten 6h.</br>";
-    }
+#    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and ($W1 > 2) and (($W1 != $W1_1 and $W1_1 > 2) or ($W1 != $W1_2 and $W1_2 > 2) or ($W1 != $W2_1 and $W2_1 > 2) or ($W1 != $W2_2 and $W2_2 > 2 ) or ($ww_2[0] != $ww[0] and $ww_2[0] > 4) or ($ww_1[0] != $ww[0] and $ww_1[0] > 4) or ($ww_3[0] != $ww[0] and $ww_3[0] > 4) or ($ww_4[0] != $ww[0] and $ww_4[0] > 4) or ($ww_5[0] != $ww[0] and $ww_5[0] > 4) or ($ww_6[0] != $ww[0] and $ww_6[0] > 4) ) ){
+#      $fW2="<b class=\"alert\">" . $W2 . "</b>";
+#      $error_message .= "Es m&uuml;ssen verschiedene W ber&uuml;cksichtig</br>werden f&uuml;r den Wetterverlauf der letzten 6h.</br>";
+#    }
+
   }else{
     list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
     if ( (($W1 == $W2) and ($W1 > 2)) and ($ww_1 < 30) ){
@@ -795,11 +796,11 @@ function rr1h($rr,$h,$d) {
     if ("14" == $h){
       $RR="Ne Biene durch geflogen.";
     }else {
-      $RR="<a href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">99.9 mm</a>";
+      $RR="<a class=\"n\" href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">99.9 mm</a>";
     }
   } elseif ($rr == "000"){
     if (($day % 6)==0){
-      $RR="<a href=\"https://www.ab-in-den-urlaub.de/magazin/wp-content/uploads/2019/04/1554381902_Sahara-W%C3%BCste.jpg\">Steppe</a>";
+      $RR="<a class=\"n\" href=\"https://www.ab-in-den-urlaub.de/magazin/wp-content/uploads/2019/04/1554381902_Sahara-W%C3%BCste.jpg\">Steppe</a>";
     } elseif (($day % 9)==0){
       $RR="au&szlig;er langeweile, nix gewesen";
     } elseif (($day % 2)==0){
@@ -807,14 +808,14 @@ function rr1h($rr,$h,$d) {
     } elseif (($day % 3)==0){
       $RR="schon wieder trocken:(";
     } elseif (($day % 5)==0){
-      $RR="<a href=\"https://www.rotkaeppchen.de/fileadmin/_processed_/b/5/csm_csm_rks-trocken-kiwi_1260x540_aa8f6af7ba_cf37c21f56.jpg\">Trocken!</a>";
+      $RR="<a class=\"n\" href=\"https://www.rotkaeppchen.de/fileadmin/_processed_/b/5/csm_csm_rks-trocken-kiwi_1260x540_aa8f6af7ba_cf37c21f56.jpg\">Trocken!</a>";
     } elseif (($day % 7)==0){
-      $RR="<a href=\"https://files.ufz.de/~drought/SM_Lall_aktuell.png\">Dürre</a>";
+      $RR="<a class=\"n\" href=\"https://files.ufz.de/~drought/SM_Lall_aktuell.png\">Dürre</a>";
     } else {
       $RR="0.0mm";
     }
   } elseif ($rr >= "100"){
-    $RR="<a href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">" . substr($rr, 0,2) . "." . substr($rr, 2,1) . " mm</a>";
+    $RR="<a class=\"n\" href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">" . substr($rr, 0,2) . "." . substr($rr, 2,1) . " mm</a>";
   } else {
     $RR=substr($rr, 0,2) . "." . substr($rr, 2,1) . "mm";
   }
