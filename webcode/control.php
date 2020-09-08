@@ -181,16 +181,6 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     }
   }
 
-  #heights
-  if ($hh1 > $hh2 and $hh2 != -99){
-    $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
-    $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
-  }
-  if ($hh2 > $hh3 and $hh3 != -99){
-    $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
-    $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
-  }
-
   #$N,$Nh
   if (($Nh > 0) and ($C1 < 3 and ($C2 < 3 or $N2 != -99))){
     $fC1 = "<b class=\"alert\">" . $C1 . "</b>";
@@ -199,6 +189,38 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
   if (($Nh < $N1) and ($Cl != 0 or $Cm != 0)){
     $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
     $error_message .= $N1."/8 ".$C1." > Nh(".$Nh.") </br>";
+  }
+
+  if (($hh1 >=51) and ($hh1 < 56)){
+    $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+  }
+
+  if (($hh2 >=51) and ($hh2 < 56)){
+    $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+  }
+
+  if (($hh3 >=51) and ($hh3 < 56)){
+    $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+  }
+
+  if (($hh4 >=51) and ($hh4 < 56)){
+    $fhh4 = "<b class=\"alert\">" . $hh4 . "</b>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+  }
+
+  #heights
+  if ($hh1 > $hh2 and $hh2 != -99){
+    $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
+    $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
+    $error_message .= "Achtergruppen Bitte nach der Höhe sortiert melden.</br>";
+  }
+  if ($hh2 > $hh3 and $hh3 != -99){
+    $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
+    $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
+    $error_message .= "Achtergruppen Bitte nach der Höhe sortiert melden.</br>";
   }
 
   #height
@@ -318,6 +340,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     $fNh="<b class=\"warn\">" . $Nh . "</b>";
     $error_message .= "Cb wird f&uuml;r die 1-3-5 Regel nicht</br>ber&uuml;cksichtigt. 8er Gruppe fehlt. Nh > Cb Bedeckungsgrad.";
   }
+
   if ( ($Ch > 0 and $Ch != "/") and (($Cl == "/") or ($Cm == "/")) ){
     $fCl="<b class=\"alert\">" . $Cl . "</b>";
     $fCm="<b class=\"alert\">" . $Cm . "</b>";
@@ -341,6 +364,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
   #  $fCh="<b class=\"alert\">" . $Ch . "</b>";
   #  $error_message .= " Ch muss gemeldet werden.</br>";
   #}
+
   if ($Nh < 6){
     if ($Cm == "/" and ($Cl != "0") and ($Ch == "/")){
       $fCm="<b class=\"alert\">" . $Cm . "</b>";
@@ -357,10 +381,10 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     $error_message .= "Hohe Wolken (Ch) m&uuml;ssen /.</br>";
   }
 
-  if ( ($Nh == 6) and ($Cl>"0") and ($Cm > "0") and ($Ch > "0") ){
+  if ( ($Nh == 6) and ($Cl>0) and ($Cm > 0) and ($Ch > 0) ){
     $fCh="<b class=\"warn\">" . $Ch . "</b>";
     $fNh="<b class=\"warn\">" . $Nh . "</b>";
-    $error_message .= "Hohe Wolken (Ch) m&uuml;ssen /.</br>";
+    $error_message .= "Hohe Wolken (Ch) sollten /.</br>";
   }
 
   if ( (($Nh > 7) and ($Cl>0)) and ($Cm != "/") ){
@@ -405,6 +429,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
   if ( ($Ch == 6) and (True != ($C1 == 2 or $C2 == 2 or $C3 == 2 or $C4 == 2)) ){
     $fCh="<b class=\"warn\">" . $Ch . "</b>";
   }
+
   #cirrucumulus
   if ( ($Ch == 9) and ($C1 != 1 xor $C2 != 1 xor $C3 != 1)){
     $fCh="<b class=\"warn\">" . $Ch . "</b>";
@@ -1268,6 +1293,7 @@ function synop ($fname,$hour,$day){
     $ir=0;
     $in=0;
   }
+  
   $value="Wetter: ".ww2words ($ww)."</br>Sicht: ". visibility ($vv) ."</br>Bedeckung: ".$N."/8</br>Tiefste Wolke: ".height ($h)."</br>".group8er ($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$hh1,$hh2,$hh3,$hh4,$Cl,$Cm,$Ch,$ww)."</br>Niederschlag (1h): ";
   #echo(count($global). " " . $global[8][0]);
   #echo( $ix .$ir .$in);

@@ -16,10 +16,112 @@
       $timestamp = time();
       $datum = date("d.m.Y", $timestamp);
       echo "<div class=\"h1\">Observation of Berlin-Dahlem in FM12 format</div>\n  </br></br>\n  <div>\n    <font>\n";
-      echo "<h2><a href=\"test.png\">Grober &Uuml;berblick &uuml;ber die F&auml;higkeiten</a></h2>\n";
-      echo "<h2><a href=\"cors.php\">COR Statistik</a></h2>\n";
-      echo "      <h2>Date: " . $datum ."</h1>\n  <table width=\"95%\" align=\"center\" cellspacing=\"9\">\n<tr><td></td><td>measurements</td><td>error message</td></tr>\n" ;
-      #echo "<h1>Maintenance</h1></br>\n    <h1>no updates until Friday</h1></br>\n" ;
+      echo "<h2><a class=\"n\" href=\"test.png\">Grober &Uuml;berblick &uuml;ber die F&auml;higkeiten</a></h2>\n";
+      echo "<h2><a class=\"n\" href=\"cors.php\">COR Statistik</a></h2>\n";
+    ?>
+      <table width="95%" align="center" cellspacing="9">
+        <tr>
+          <td></td>
+          <td>measurements</td>
+          <td>error message</td>
+        </tr>
+        <tr class="sm" >
+      <td>
+        <b class="sm">
+          Syntax:
+        </b></br></br>
+
+        <code>
+          <a href="fm12.html#MMMM">MMMM</a> 
+          <a href="fm12.html#DD">D....D</a>
+          <a href="fm12.html#YYGGggi"> YYGGggi</a>  
+          <a href="fm12.html#99LLL"> 99LLL QLLLL</a>  
+          </br>
+          <a href="fm12.html#IIiii"> IIiii</a>  
+          <a href="fm12.html#iihVV"> iihVV</a>  
+          <a href="fm12.html#Nddff"> Nddff</a>  
+          <a href="fm12.html#11"> 1sTTT</a>  
+          <a href="fm12.html#12"> 2sTTT</a>  
+          <a href="fm12.html#13"> 3PPPP</a>  
+          <a href="fm12.html#14"> 4PPPP</a>  
+          <a href="fm12.html#15"> 5appp</a>  
+          <a href="fm12.html#16"> 6RRRt</a>  
+          <a href="fm12.html#17"> 7wwWW</a>  
+          <a href="fm12.html#18"> 8NCCC</a>  
+          <a href="fm12.html#19"> 9GGgg</a>  
+          </br>&nbsp;<font> 333 </font>
+          <a href="fm12.html#30"> 0....</a>  
+          <a href="fm12.html#31"> 1sTTT</a>  
+          <a href="fm12.html#32"> 2sTTT</a>  
+          <a href="fm12.html#33"> 3EsTT</a>  
+          <a href="fm12.html#34"> 4E'sss</a>  
+          <a href="fm12.html#355"> 55SSS</a>  
+          <a href="fm12.html#3552"> 2FFFF</a>  
+          <a href="fm12.html#3553"> 3FFFF</a>  
+          <a href="fm12.html#3554"> 4FFFF</a>  
+          <a href="fm12.html#353"> 553SS</a>  
+          <a href="fm12.html#3532"> 2FFFF</a>  
+          <a href="fm12.html#3533"> 3FFFF</a>  
+          <a href="fm12.html#3534"> 4FFFF</a>  
+          <a href="fm12.html#36"> 6RRRt</a>  
+          <a href="fm12.html#37"> 7RRRR</a>  
+          <a href="fm12.html#38"> 8NChh</a>  
+          <a href="fm12.html#39"> 9SSss</a>  
+          </br>&nbsp;<font> 555 </font>
+          <a href="fm12.html#50"> 0sTTT</a>  
+          <a href="fm12.html#51"> 1RRRr</a>  
+          <a href="fm12.html#52"> 2sTTT</a>  
+          <a href="fm12.html#522"> 22fff</a>  
+          <a href="fm12.html#523"> 23SS</a>  
+          <a href="fm12.html#524"> 24Wt</a>  
+          <a href="fm12.html#525"> 25ww</a>  
+          <a href="fm12.html#526"> 26fff</a>  
+          <a href="fm12.html#53"> 3LLLL</a>  
+          <a href="fm12.html#55"> 5ssst</a>  
+          <a href="fm12.html#57"> 7hhZD</a>  
+          <a href="fm12.html#58"> 8N/hh</a>  
+          <a href="fm12.html#5910"> 910ff</a>  
+          <a href="fm12.html#5911"> 911ff</a>  
+          <a href="fm12.html#5912"> 912ff</a>  
+          </br>&nbsp;<font>BOT </font><a href="fm12.html#BOT"> hsTTT</a>  
+          </br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font>80000 </font>
+          <a href="fm12.html#581"> 1RRRRW</a>  
+          <a href="fm12.html#582"> 2SSSS</a>  
+          <a href="fm12.html#583"> 3fff</a>  
+          <a href="fm12.html#584"> 4fff</a>  
+          <a href="fm12.html#585"> 5RR</a>
+          <a href="fm12.html#586"> 6VVVVVV</a>  
+          <a href="fm12.html#587"> 7sTTT</a>  
+          <a href="fm12.html#588"> 8sTTT</a>  
+          <a href="fm12.html#589"> 9sTTTs</a>  
+          </br>
+          &nbsp;<font>666 </font><a href="fm12.html#61"> 1sTTT</a>  
+          <a href="fm12.html#62"> 2sTTT</a>  
+          <a href="fm12.html#63"> 3sTTT</a>  
+          <a href="fm12.html#66"> 6VVVV/VVVV</a>  
+          <a href="fm12.html#67"> 7VVVV</a>  
+          </br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font>80000 </font>
+          <a href="fm12.html#680"> 0RRRr 1RRRr 2RRRr 3RRRr 4RRRr 5RRRr</a>
+        </code>
+      </td>
+      <td>
+        Wetter: <a href="fm12.html#17"> ww</a></br>
+        Sicht: <a href="fm12.html#iihVV"> VV</a></br>
+        Bedeckung: <a href="fm12.html#18"> N</a>/8</br>
+        Tiefste Wolke: <a href="fm12.html#iihVV"> h</a></br>
+        Wolkenschichten: <a href="fm12.html#38"> 8NChh</a></br>
+        Niederschlag (1h): <a href="fm12.html#51"> RRR</a></br>
+      </td>
+      <td></td>
+    </tr>
+    <tr><td>
+    <?php
+      echo "      <h2>Date: " . $datum ."</h1>\n\n";
+    ?>
+    </tr></td>
+    <?php
       $day = date("d", $timestamp);
       $hour = date("H", $timestamp);
       $cor=0;
@@ -36,6 +138,7 @@
           echo("\n  <tr class=\"sn\" >\n    <td>\n     <b>Hour:  ". $x . " UTC</b></br>");
           list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day);
         }
+        
         echo("\n    </td>\n    <td>\n    ". $value ."\n    </td>\n    <td>\n    ". $error_message ."\n    </td>\n  </tr>\n");
         $cor += $cor_count;
       }
@@ -62,11 +165,10 @@
       }
       echo("</table>\n");
       echo "Anzahl COR's: ".$cor." </br>\n";
-     
+      echo "</br>\nLast update: " . date ("d.m.y H:i", filemtime(sprintf("obs_".$day."%02s.txt", 12))) . "UTC";
     ?>
     </table>
     </font>
     </div>
-    <h2><a href="beispielobs.png">Grober &Uuml;berblick &uuml;ber die F&auml;higkeiten</a></h2>
   </body>
 </html>
