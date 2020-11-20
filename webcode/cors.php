@@ -19,9 +19,10 @@
       $value_s="y: [";
       $value_n="y: [";
       $x_value="x: [";
-      $n=30;
+      $n=31;
       $sum=0;
       $max=0;
+      $sum7=0;
       for ($i = 0; $i <= $n; $i++) {
         $cor=0;
         $sum_d=0;
@@ -44,7 +45,7 @@
         for ($x = 23; $x >= 22; $x--) {
           $cor += cor_func(sprintf("obs_".$day."%02s.txt", $x),$x,$day);
         }
-        $value_n .=$cor . ",";
+        $value_n .= $cor . ",";
         $sum_d += $cor;
         $cor=0;
         
@@ -52,6 +53,9 @@
         $sum+=$sum_d;
         if ($sum_d > $max){
           $max = $sum_d;
+        }
+        if ($i < 7){
+          $sum7 += $sum_d;
         }
       }
       $value_f = substr($value_f, 0, -1) . "],";
@@ -118,8 +122,7 @@
       Plotly.newPlot('myDiv', data, layout, config );
     </script>
     <?php 
-      echo "Average per day : " .$sum/$n."</br>\nMax : ". $max;
-    
+      echo "Average per day : " .$sum/$n. "</br>Average last 7 Days : " . $sum7/7.0 ."</br>\nMax : ". $max;
     ?>
     </div>
   </body>

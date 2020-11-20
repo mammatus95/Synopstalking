@@ -3,6 +3,16 @@
 class raingroup{
     public $RR;
     public $tr;
+
+    function __construct($global,$index) {
+        $rr = intval(substr($global[$index], 1,3));
+        if ($rr >= 990){
+            $this->RR = ($rr-990)/10.0;
+        } else {
+            $this->RR = $rr;
+        }
+        $this->tr = $global[$index][4];
+    }
 }
 
 class AchterGruppe{
@@ -20,34 +30,92 @@ class CloudGroup{
     public $Ch; //kind of high clouds
     //public $first = new AchterGruppe();
     function __construct($global,$index) {
-    $this->N =$global[2][0];
-    $this->h =$global[1][2];
-    $this->Nh=$global[$index][1];
-    $this->Cl=$global[$index][2];
-    $this->Cm=$global[$index][3];
-    $this->Ch=$global[$index][4];
+        $this->N =$global[2][0];
+        $this->h =$global[1][2];
+        $this->Nh=$global[$index][1];
+        $this->Cl=$global[$index][2];
+        $this->Cm=$global[$index][3];
+        $this->Ch=$global[$index][4];
     }
+
+    public function func_N($ww) {
+        $fN=$this->N; #vsprintf("%1d", $this->N);
+        $error_message="";
+
+        if ( $this->N == "/"){
+            $fN="<b class=\"alert\">" . $this->N . "</b>";
+            $error_message .= "Gesamt Bedeckugsgrad fehlt!</br>";
+          }
+
+        #fog
+        if ( (($ww == 43) or ($ww == 45) or ($ww == 47) or ($ww == 49) or ($ww == 82) or ($ww == 99)) xor ($this->N == 9) ){
+            $fN="<b class=\"alert\">" . $this->N . "</b>";
+            $error_message .= "Himmel nicht erkennbar wurde</br>nicht konsistenz gemeldet!</br>ww und N prüfen.";
+        }
+
+        #Nh
+        if ($this->N < $this->Nh) {
+            $fN="<b class=\"alert\">" . $this->N . "</b>";
+            $error_message .= "N < Nh</br>";
+        }
+
+        #h
+        if ( ($this->N == 9) and ($this->h != "/") ) {
+            $fN="<b class=\"warn\">" . $this->N . "</b>";
+          }
+
+        #current weather
+        if ( ($ww >= 14) and ($this->N == 0)){
+            $fN="<b class=\"warn\">" . $this->N . "</b>";
+            $error_message .= "Fallstreifen fallen</br>in der Regel aus Wolken.";
+        }
+
+        if ( ($ww >= 50 or $ww == 16) and ($this->N == 0)){
+            $fN="<b class=\"alert\">" . $this->N . "</b>";
+            $error_message .= "ww gegeben, aber N 0/8.</br>";
+        }
+
+        return $fN;
+    }
+
+    public function func_h() {
+
+    }
+
+    public function func_Nh() {
+
+    }
+
+
+
+    public function func_Cl() {
+
+    }
+
+    public function func_Cm() {
+
+    }
+
+    public function func_Ch() {
+
+    }
+
 }
 
 class weathergroup{
-    private $vv; //visability
-    private $relh //relative humidity
     public $ww; //current weather
-    private $W;  //current weather interpretation as big W
-    private $W1; //W1
-    private $W2; //W2
-    private $error;
-    function __construct($vv, $relh, $global,$index=null) {
+    public $W;  //current weather interpretation as big W
+    public $W1; //W1
+    public $W2; //W2
+    public $error;
+
+    function __construct($global,$index=null) {
         if (is_null($index)) {
-            $this->vv=$vv;
-            $this->relh=$relh;
-            $this->ww=-99;
-            $this->W=-99;
-            $this->W1=-99;
-            $this->W2=-99;
+            $this->ww=0;
+            $this->W=0;
+            $this->W1=0;
+            $this->W2=0;
         } else {
-            $this->vv=$vv;
-            $this->relh=$relh;
             $this->ww=intval(substr($global[$index], 1,2));
             $this->W=$this->ww2W($this->ww);
             $this->W1=intval($global[$index][3]);
@@ -69,6 +137,20 @@ class weathergroup{
         $string7 .= $this->W1;
         $string7 .= $this->W2;
         echo($string7);
+    }
+
+    public function func_ww($relh,$vv,$N, $h, $hh1) {
+        
+        if ($this->ww == 0 and $this->W1 == 0){
+            return null;
+        } else {
+            $fww=vsprintf("%02d", $this->ww);
+            $fW1=$this->W1;
+            $fW2=$this->W2;
+            echo(" 7" . $fww . $fW1 . $fW2);
+            return null;
+        }
+        
     }
 
     private function ww2W($ww){
@@ -159,41 +241,64 @@ class weathergroup{
 }
 
 class SynopReport {
-    public $globalcount; //count of grups in global section
+    
+    /*
+    MMMM D....D YYGGggi 99LLL QLLLL
+    IIiii oder IIIII iihVV Nddff 00fff 1sTTT 2sTTT 3PPPP 4PPPP 5appp 6RRRt 7wwWW 8NCCC 9GGgg
+    333 0.... 1sTTT 2sTTT 3EsTT 4E'sss 55SSS 2FFFF 3FFFF 4FFFF 553SS 2FFFF 3FFFF 4FFFF 6RRRt 7RRRR 8NChh 9SSss
+    */
+    public $fm12_parts=null;
+    public $globalcount; //count of groups in global section
     public $ix; //automatic and weather reportet
     public $ir; //rain groups
     public $in; //wind unit
+    public $h; //
+    public $vv; //visibility
+    public $N;  //total cloud cover
+    public $dd; //wind direction
+    public $ff; //wind velocity
     public $T;  //temperature
     public $Td; //dewpoint
     public $rel;//relative humidity
-    public $dd; //wind direction
-    public $ff; //wind velocity
-    public $vv; //visibility
+    public $Nh; //amount of low clouds or midlevel clouds
     public $ppp; //pressure
-    public $weather; //weather (weathergroup class)
-    public $error_message=""; //error_message
-    public $value=""; //values
-    public $fatal_flag=FALSE; //fatal error flag
+    public $a; //kind of tendency
+    public $p_ten; //tendency
+    public $rainglobal=null; //rain (raingroup class)
+    public $weather=null; //weather (weathergroup class)
+    public $clouds=null; //clouds (cloudgroup class)
+    public $count333; //count of groups in third section
+    public $E;  //ground state
+    public $E_snow; //typ of the snow cover
+    public $sss; //snow height
+    public $rain333=null; //rain (raingroup class)
 
     // Meteorological Constants
     private $ROCP = 0.28571426;       // R over Cp
     private $ZEROCNK = 273.15;        // Zero Celsius in Kelvins
     private $G = 9.80665;             // Gravity
 
-    //....
-    function __construct($fname) {
+    //constructor
+    function __construct($fname){
         $zitate = file_get_contents($fname);
-        $parts = explode("\n", $zitate);
-        $global = explode(" ", $parts[3]);
-        $sec333 = explode(" ", $parts[4]);
+        $this->fm12_parts = explode("\n", $zitate);
+        if (count($this->fm12_parts) == 1) {
+            throw new Exception("NIL");
+        } elseif (count($this->fm12_parts) < 6){
+            throw new Exception("FM12 isn't in full!");
+        }
+        $global = explode(" ", $this->fm12_parts[3]);
+        $sec333 = explode(" ", $this->fm12_parts[4]);
      
         $this->globalcount = count($global);
         $this->ix = intval($global[1][0]);
         $this->ir = intval($global[1][1]);
         
+        $this->h = $global[1][2];
         /*get observation values*/
         $this->vv=substr($global[1], -2);  #visibility
         #echo($this->vv . "\n");
+        $this->N =$global[2][0];
         $this->dd =substr($global[2], 1,2);
         $this->ff =substr($global[2], -2);
         #echo($this->dd . "\n");
@@ -207,8 +312,7 @@ class SynopReport {
             }
             #echo($this->T);
         } else {
-            /*set fatal error flag*/
-            $this->fatal_flag=TRUE;
+            throw new Exception("Temperature group wasn't found!");
         }
 
         if ($global[4][0] == '2'){//dewpoint
@@ -217,10 +321,9 @@ class SynopReport {
             }else{
                 $this->Td=intval(substr($global[4], 2,3))/10.0; 
             }
-            echo($this->Td . "\n");
+            #echo($this->Td . "\n");
         } else {
-            /*set fatal error flag*/
-            $this->fatal_flag=TRUE;
+            throw new Exception("Dewpoint group wasn't found!");
         }
         if ($global[5][0] == '3'){//pressure
             $this->ppp=intval(substr($global[5], 2,4))/10.0;
@@ -229,27 +332,86 @@ class SynopReport {
             }
             #echo($this->ppp);
         } else {
+            throw new Exception("Pressure group wasn't found!");
+        }
+
+        $this->relh = $this->relh($this->ppp, $this->T + $this->ZEROCNK,  $this->Td + $this->ZEROCNK);
+
+        if ($global[7][0] == '5'){
+            if ($global[7][1] == "/") {
+                echo($global[7][0] . "<b style=\"color:red;\">" . $global[7][1] . "</b>" . substr($global[7], -3) . " ");
+                #$error_message .= "Tendenz fehlt.</br>";
+            } else {
+                #echo ($global[7] . " ");
+            }
+        } else {
             /*set fatal error flag*/
             $this->fatal_flag=TRUE;
         }
 
-        $this->relh = $this->relh($this->ppp, $this->T + $this->ZEROCNK,  $this->Td + $this->ZEROCNK);
-/*
-        while ($this->globalcount)
+        $i=8;
+        #echo($this->globalcount);
+        while ($i <= $this->globalcount){
+            if ($global[$i][0] == '6'){
+                $this->rainglobal = new raingroup($global,$i);
+            } elseif ($global[$i][0] == '7'){
+                $this->weather = new weathergroup($global,$i);
+                #$this->weather->htmloutput();
+            } elseif ($global[$i][0] == '8'){
+                $this->clouds  = new CloudGroup($global,$i);
+                #echo($this->clouds->html_totalcover(40));
+            }
+            $i+=1;
+        }
 
-     if (count($global) == "11"){//all groups are delevert
-        $this->weather = new weathergroup($global,$this->globalcount-2);
-        $this->clouds  = new CloudGroup($global,$this->globalcount-1);
-        #$this->weather->print_weathergroup();#output
-        $this->weather->htmloutput();
-     } else {
-     
-     $this->weather = new weathergroup();
-     $this->weather->print_weathergroup();
-     }
 
-*/
-  }
+        
+    }
+
+    public function main_func(){
+        $error_message=""; //error_message
+        $value=""; //values
+
+        try {
+            $this->head_func();
+        } catch (Exception $e) {
+            echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
+            $this->print_fm12(1);
+            echo "<b>If you don't know why this happend, send a message at quali(at)met.fu-berln.de.</b></br></br>\n";
+        }
+        $this->global_func();
+    }
+
+    /*MMMM D....D YYGGggi 99LLL QLLLL*/
+    private function head_func(){
+        if (ord($this->fm12_parts[0][0]) == 1){
+            echo($this->fm12_parts[1] . "<br>" . $this->fm12_parts[2]);
+        } elseif (ord($this->fm12_parts[0][0]) == 0) {
+            throw new Exception("Missing character in the first row! " . ord($this->fm12_parts[0][0]));
+        } elseif (ord($this->fm12_parts[0][0]) == 83) {
+            throw new Exception("First row missing completly! " . ord($this->fm12_parts[0][0]));
+        } else {
+            throw new Exception("Something unexpected happened! " . ord($this->fm12_parts[0][0]) . " " . $this->fm12_parts[0][0]);
+        }
+    }
+
+    private function print_fm12($k){
+        echo($this->fm12_parts[1-$k] . "<br>" . $this->fm12_parts[2-$k] . "<br>");
+        echo($this->fm12_parts[3-$k]. "<br>");
+        echo($this->fm12_parts[4-$k]. "<br>");
+        echo($this->fm12_parts[5-$k]. "<br>");
+    }
+
+    private function global_func(){ /* main function for global and 333 sec*/
+        /*
+        IIiii iihVV Nddff 00fff 1sTTT 2sTTT 3PPPP 4PPPP 5appp 6RRRt 7wwWW 8NCCC 9GGgg
+          333 1sTTT 2sTTT 3EsTT 4E'sss 55SSS 2FFFF 3FFFF 4FFFF 553SS 2FFFF 3FFFF 4FFFF 6RRRt 7RRRR 8NChh 9SSss
+        */
+        echo("</br>");
+        if ($this->weather!=null){
+            $this->weather->func_ww($this->relh,$this->vv,$this->N, $this->h, 0);
+        }
+    }
 
 
     private function vappres($t){
@@ -307,9 +469,28 @@ class SynopReport {
 
 }
 
+
+
 function synop ($fname,$hour,$day){
-$test = new SynopReport($fname);
-//echo("test");
+    try {
+        $test = new SynopReport($fname);
+    } catch (Exception $e) {
+        if ( $e->getMessage() == "NIL"){
+            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 was submited to late!</b>";
+            return null;
+        } else {
+            echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
+            echo "<b>If you don't know why this happend, send a message at quali@met.fu-berln.de.</b></br></br>\n";
+            return null;
+        }
+    }
+
+    
+
+    $test->main_func();
+
+
+#echo($fname);
 #echo ($test->ix);
 #echo ($test->ir);
 }

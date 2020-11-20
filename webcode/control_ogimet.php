@@ -267,19 +267,15 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $R += 2;
   }
   if ($N2 < $R and $C2 != 9 and $N2 !=-99){
-    $fC2 = "<b class=\"alert\">" . $C2 . "</b>";
     $fN2 = "<b class=\"alert\">" . $N2 . "</b>";
-    $fhh2 = "<b class=\"alert\">" . $fhh2 . ":(</b>";
-    $error_message .= "1-3-5 Regel missachtet! </br>";
+    $error_message .= "1-3-5 Regel missachtet.</br>";
   }
   if ($C2 != 9){
     $R += 2;
   }
   if ($N3 < $R and $C3 != 9 and $N3 !=-99){
-    $fC3 = "<b class=\"alert\">" . $C3 . "</b>";
     $fN3 = "<b class=\"alert\">" . $N3 . "</b>";
-    $fhh3 = "<b class=\"alert\">" . $fhh3 . " :(</b>";
-    $error_message .= "1-3-5 Regel missachtet!</br>";
+    $error_message .= "1-3-5 Regel missachtet.</br>";
   }
   if ($C3 != 9){
     $R += 2;
@@ -427,23 +423,9 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     }
   }
   
-  if ( ($Cl == 0) and ($C1 >= 6) ){
-    $fCl="<b class=\"warn\">" . $Cl . "</b>";
-  }
-  
-  if ( ($Cl == 6) and ($Cm == 1 or $Cm == 2 or $Cm == 7) and (($ww[0] == 2 or $ww >= 50) and $ww != 28) ){
-    $fCl="<b class=\"warn\">" . $Cl . "</b>";
-    $error_message .= "C<sub><code>l</code></sub>=7 w&uuml;rde besser passen.</br>";
-  }
-  
-  if ( ($Cl != 0) and ($Nh > 0) and ($C1 < 6 and $C2 < 6 and $C3 < 6) ){
-    if ( ($Cl == 5 and (True != ($C1 == 6 or $C2 == 6 or $C3 == 6 or $C4 == 6))) or  ($Cl == 6 and (True != ($C1 != 7 or $C2 != 7 or $C3 != 7 or $C4 != 7))) ){
-      $fCl="<b class=\"alert\">" . $Cl . "</b>";
-      $error_message .= "Sc oder St fehlt in den 8er-Gruppen!</br>";
-    } else {
-      $fCl="<b class=\"alert\">" . $Cl . "</b>";
-      $error_message .= "Art der tiefen Wolken C<sub><code>l</code></sub> fehlt!</br>";
-    }
+  if ( ($Cl == 5 and (True != ($C1 == 6 or $C2 == 6 or $C3 == 6 or $C4 == 6))) or  ($Cl == 6 and (True != ($C1 != 7 or $C2 != 7 or $C3 != 7 or $C4 != 7))) ){
+    $fCl="<b class=\"alert\">" . $Cl . "</b>";
+    $error_message .= "Sc oder St fehlt in den 8er-Gruppen!</br>";
   }
 
   if ( ($Cl == 9 or $Cl == 3) and (True != ($C1 == 9 or $C2 == 9 or $C3 == 9 or $C4 == 9)) ){
@@ -452,14 +434,10 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
   }
 
   #Vorrangordnung Cl
-  if ( ($Cl == 1 or $Cl == 2) and (($C1 == 8 and $C2 == 6) or ($C2 == 8 and $C3 == 6)) ){
+  if ( ($Cl == 1 or $Cl == 2) and (($C1 == 8 or $C2 == 8) and ($C2 == 6 or $C3 == 6)) ){
     $fCl="<b class=\"alert\">" . $Cl . "</b>";
     $error_message .= "Vorrangordnung nicht beachtet!</br>";
   }
-  
-
-  
-  
   if ( ($Ch == 6) and (True != ($C1 == 2 or $C2 == 2 or $C3 == 2 or $C4 == 2)) ){
     $fCh="<b class=\"warn\">" . $Ch . "</b>";
   }
@@ -474,7 +452,9 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     $error_message .= "8/8 Cs, aber kein 8er-Gruppe mit Cs.</br>";
   }
 
-
+  if ( ($Cl == 0) and ($C1 >= 6) ){
+    $fCl="<b class=\"warn\">" . $Cl . "</b>";
+  }
 
   if ( (($Cm == 0) or ($Cm == "/")) and ($C1 == 3 or $C2 == 3 or $C3 == 3 or $C4 == 3 or $C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4 or $C1 == 5 or $C2 == 5 or $C3 == 5 or $C4 == 5) ){
     $fCm="<b class=\"alert\">" . $Cm . "</b>";
@@ -868,9 +848,9 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   #}
 
   if ( ($hour ==  "03") or ($hour  ==  "09") or ($hour  ==  "15") or ($hour  == "21")){
-    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
-    list ($ww_2, $W1_2, $W2_2) = getww(sprintf("obs_".$day."%02s.txt", $hour-2));
-    list ($ww_3, $W1_3, $W2_3) = getww(sprintf("obs_".$day."%02s.txt", $hour-3));
+    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("tegel_".$day."%02s.txt", $hour-1));
+    list ($ww_2, $W1_2, $W2_2) = getww(sprintf("tegel_".$day."%02s.txt", $hour-2));
+    list ($ww_3, $W1_3, $W2_3) = getww(sprintf("tegel_".$day."%02s.txt", $hour-3));
     if ( (($ww_1 >= 17 and ($ww_1 != 40)) or ($ww_2 >= 17 and ($ww_2 != 40)) or ($ww_3 > 30 and ($ww_3 != 40)) ) and ($W1 <= 2) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -901,12 +881,12 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     #}
 
   }elseif ( ($hour ==  "00") or ($hour ==  "06") or ($hour ==  "12") or ($hour == "18")){
-    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
-    list ($ww_2, $W1_2, $W2_2) = getww(sprintf("obs_".$day."%02s.txt", $hour-2));
-    list ($ww_3, $W1_3, $W2_3) = getww(sprintf("obs_".$day."%02s.txt", $hour-3));
-    list ($ww_4, $W1_4, $W2_4) = getww(sprintf("obs_".$day."%02s.txt", $hour-4));
-    list ($ww_5, $W1_5, $W2_5) = getww(sprintf("obs_".$day."%02s.txt", $hour-5));
-    list ($ww_6, $W1_6, $W2_6) = getww(sprintf("obs_".$day."%02s.txt", $hour-6));
+    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("tegel_".$day."%02s.txt", $hour-1));
+    list ($ww_2, $W1_2, $W2_2) = getww(sprintf("tegel_".$day."%02s.txt", $hour-2));
+    list ($ww_3, $W1_3, $W2_3) = getww(sprintf("tegel_".$day."%02s.txt", $hour-3));
+    list ($ww_4, $W1_4, $W2_4) = getww(sprintf("tegel_".$day."%02s.txt", $hour-4));
+    list ($ww_5, $W1_5, $W2_5) = getww(sprintf("tegel_".$day."%02s.txt", $hour-5));
+    list ($ww_6, $W1_6, $W2_6) = getww(sprintf("tegel_".$day."%02s.txt", $hour-6));
     if ( (($W1 == $W2) and ($W1 > 2)) and (($ww_1 < 30) or ($ww_2 < 30) or ($ww_3 < 30) or ($ww_4 < 30) or ($ww_5 < 30) or ($ww_6 < 30) or ($W1_1 < 3) or ($W1_2 < 3) or ($W1_3 < 3) or ($W1_4 < 3) or ($W1_5 < 3) or ($W1_1 != $W2_1) or ($W1_2 != $W2_2) or ($W1_3 != $W2_3) or ($W1_4 != $W2_4) or ($W1_5 != $W2_5)) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -945,7 +925,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
 #    }
 
   }else{
-    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
+    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("tegel_".$day."%02s.txt", $hour-1));
     if ( (($W1 == $W2) and ($W1 > 2)) and ($ww_1 < 30) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -1135,7 +1115,7 @@ function ww2words ($ww){
     case 47: $WW="Nebel, dichter werdend"; break;
     case 48: $WW="Nebel mit Reifansatz"; break;
     case 49: $WW="Nebel mit Reifansatz"; break;
-    case 50: $WW="leichter Spr&uuml;hregen mit </br> Unterbrechung"; break;
+    case 50: $WW="u. leichter Spr&uuml;hregen"; break;
     case 51: $WW="leichter Spr&uuml;hregen"; break;
     case 52: $WW="m&auml;&szlig;iger Spr&uuml;hregen"; break;
     case 53: $WW="m&auml;&szlig;iger Spr&uuml;hregen"; break;
@@ -1353,31 +1333,6 @@ function group8er ($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$hh1,$hh2,$hh3,$hh4,$Cl,$Cm,$
   return $back;
 }
 
-function cor_func2 ($cor){
-  if ($cor == "CCA"){
-    $cor_count=1;
-  } else if ($cor == "CCB"){
-    $cor_count=2;
-  } else if ($cor == "CCC"){
-    $cor_count=3;
-  } else if ($cor == "CCD"){
-    $cor_count=4;
-  } else if ($cor == "CCE"){
-    $cor_count=5;
-  } else if ($cor == "CCF"){
-    $cor_count=6;
-  } else if ($cor == "CCG"){
-    $cor_count=7;
-  } else if ($cor == "CCH"){
-    $cor_count=8;
-  } else if ($cor == "CCI"){
-    $cor_count=9;
-  } else if ($cor == "CCJ"){
-    $cor_count=10;
-  }
-  return $cor_count;
-}
-
 function vappres($t){
   /*
   Calculate the vapress for given temperature.
@@ -1501,12 +1456,11 @@ function synop ($fname,$hour,$day){
     throw new Exception("Missing character in the first row! " . ord($parts[0][0]));
   } elseif (ord($parts[0][0]) == 83) {
     throw new Exception("First row is missing completly! " . ord($parts[0][0]));
-  } elseif (count($parts) < 6){
+  } elseif (count($parts) < 3){
     throw new Exception("FM12 isn't complete!");
   }
   #head
   echo("<br>" . $parts[1] . "<br>" . $parts[2]);
-  $cor_count= cor_func2(strstr($parts[1], 'CC'));
   
   /*global*/
   $global = explode(" ", $parts[3]);
@@ -1523,6 +1477,12 @@ function synop ($fname,$hour,$day){
   $h=$global[1][2];            #height of lowest cloud layer
   $vv=substr($global[1], -2);  #visibility
   $N=$global[2][0];            #total cloud cover
+  
+  #bufr fix
+  if ( ($N != 9) and ($h == "/") ){
+    $h=9;
+  }
+  
   #$dd =substr($global[2], 1,2);
   #$ff =substr($global[2], -2);
   //temperature
@@ -1767,101 +1727,9 @@ function synop ($fname,$hour,$day){
     }
     $x++;
   }
-  $sec555 = explode(" ", $parts[5]);
-  echo("</br>&nbsp&nbsp&nbsp" . $sec555[2] . " " );
-  $x=3;
-  while($x <= count($sec555)) {
-    if (substr($sec555[$x], 0,1) == "1") {
-      $value.=rr1h(substr($sec555[$x], 1,3),substr($parts[1],12,2),substr($parts[1],10,2));
-      if ( (($ww >= 50 and $ww != 76 ) or ($ww[0] == 2 and $ww != 29 and $ww != 28)) and ($sec555[$x] == "10000")){
-        echo("<b style=\"color:red;\">" . $sec555[$x] . "</b> ");
-        $error_message .= "Unstimmigkeit zw. ww & rr 1h</br>RR wurde nicht registriert?</br>";
-      }elseif ( ($ww < 20 or $ww == 76 ) and ($sec555[$x] != "10000")){
-        echo("<b style=\"color:orange;\">" . $sec555[$x] . "</b> ");
-      } else {
-        echo($sec555[$x] . " ");
-      }
-    } elseif (substr($sec555[$x], 0,2) != "24") {
-      echo($sec555[$x] . " ");
-    } else {
-      if ( ( (($ww[0] == 2 or $ww >= 50) and ($ww != 29 and $ww != 28)) or ($W1 > 4 and ($W1 != 9)) or ($W2>4) ) and ($sec555[$x][2] == 0) ){
-        echo($sec555[$x][0] . $sec555[$x][1] . "<b style=\"color:red;\">" . $sec555[$x][2] . "</b>" . $sec555[$x][3] . " ");
-        $error_message .= "Niederschlagsart <a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> falsch.</br>";
-      } elseif ($sec555[$x][2] == "/") {
-        echo($sec555[$x][0] . $sec555[$x][1] . "<b style=\"color:red;\">" . $sec555[$x][2] . "</b>" . $sec555[$x][3] . " ");
-        $error_message .= "Niederschlagsart <a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> fehlt!</br>";
-      } elseif (($sec555[$x][2] == "0") and  ($ir == 1 and (substr($global[8], 1,3) != "000"))){
-        echo($sec555[$x][0] . $sec555[$x][1] . "<b style=\"color:red;\">" . $sec555[$x][2] . "</b>" . $sec555[$x][3] . " ");
-        if (($global[8][4] == 1) and ($ix != 1)){
-          $error_message .= "Niederschlag gemeldet, aber die Niederschlagsart <a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> und 7wwW<sub><code>1</code></sub>W<sub><code>2</code></sub> fehlen!!";
-        } else {
-          $error_message .= "Niederschlag gemeldet, aber die Niederschlagsart <a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> fehlt!</br>Bezugszeitraum(tr): " . tr_func($global[8][4]) . "</br>";
-        }
-      } elseif ( ( ($ww[0] == 7) or ($ww == 90) or ($ww == 99) or ($ww == 93) or ($ww == 92) or ($ww == 96) or ($ww == 22) or ($ww == 26) or ($ww == 27) or ($W1 == 7) or ($W2 == 7) ) and ($sec555[$x][2] == 6) ){
-        echo($sec555[$x][0] . $sec555[$x][1] . "<b style=\"color:red;\">" . $sec555[$x][2] . "</b>" . $sec555[$x][3] . " ");
-        $error_message .= "Niederschlagsart <a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> ist falsch.</br>Fester Niederschlag kam im Bezugszeitraum vor.</br>";
-      } elseif ( ( ($ww == 23) or ($ww == 68) or ($ww == 69) or ($ww == 83) or ($ww == 84) or (($W1 == 6) and ($W2 == 7)) ) and ($sec555[$x][2] != 8) ){
-        echo($sec555[$x][0] . $sec555[$x][1] . "<b style=\"color:red;\">" . $sec555[$x][2] . "</b>" . $sec555[$x][3] . " ");
-        $error_message .= "Niederschlagsart <a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> ist falsch.</br>In der 7er Gruppe wurde</br>fest und fl&uuml;ssig gemeldet!</br>";
-      } elseif ( ( ($ww == 48) or ($ww == 49)) and ($sec555[$x][2] == 0) ){
-        echo($sec555[$x][0] . $sec555[$x][1] . "<b style=\"color:red;\">" . $sec555[$x][2] . "</b>" . $sec555[$x][3] . " ");
-        $error_message .= "Niederschlagsart ist fehlt.</br><a href=\"fm12.html#524\">W<sub><code>R</code></sub></a> muss 3 -- nur feste abgesetzte Niederschl&auml;ge</br>";
-      } else {
-        echo($sec555[$x] . " ");
-      }
-    }
-    $x++;
-  }
-  echo("</br>&nbsp" . $parts[6]);
-  if ( ($hour ==  "00") or ($hour ==  "06") or ($hour ==  "12") or ($hour == "18")){
-    $sec666 = explode(" ", $parts[7]);
-    if ( (($ww >= 20 and ($ww != 28 or ($ww[0] != 3) or ($ww[0] != 4))) or ($W1 > 4 and ($W1 != 9)) or ($W2>4)) and (substr($sec666[7], -1,1) == "/" or substr($sec666[7], -1,1) == 0) ) {
-      echo ("</br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp80000&nbsp1" . substr($sec666[7], 1,4) . "<b style=\"color:red;\">" . substr($sec666[7], -1,1) . "</b> ");
-      $error_message .= "Niederschlagsart(6h) fehlt! ";
-      $x=8;
-      while($x <= count($sec666)) {
-        echo($sec666[$x] . " ");
-        $x++;
-      }
-      echo("</br>&nbsp&nbsp" . $parts[8]);
-    } else {
-      echo("</br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" . $parts[7]);
-      echo("</br>&nbsp&nbsp" . $parts[8]);
-    }
-  } else {
-    echo("</br>&nbsp&nbsp" . $parts[7]);
-  }
-  return array($error_message,$value,$cor_count);
+  
+  return array($error_message,$value);
 }
 
-function cor_func ($fname,$hour,$day){
 
-  $zitate = file_get_contents($fname);
-  $parts = explode("\n", $zitate);
-  $cor_count=0;
-  $cor = strstr($parts[1], 'CC');
-
-  if ($cor == "CCA"){
-    $cor_count=1;
-  } else if ($cor == "CCB"){
-    $cor_count=2;
-  } else if ($cor == "CCC"){
-    $cor_count=3;
-  } else if ($cor == "CCD"){
-    $cor_count=4;
-  } else if ($cor == "CCE"){
-    $cor_count=5;
-  } else if ($cor == "CCF"){
-    $cor_count=6;
-  } else if ($cor == "CCG"){
-    $cor_count=7;
-  } else if ($cor == "CCH"){
-    $cor_count=8;
-  } else if ($cor == "CCI"){
-    $cor_count=9;
-  } else if ($cor == "CCJ"){
-    $cor_count=10;
-  }
-  return $cor_count;
-}
 ?>
