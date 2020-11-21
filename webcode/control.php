@@ -1887,6 +1887,15 @@ function synop ($fname,$hour,$day){
       if ((substr($sec333[$x], 0,3) == "964") and (($hour % 3) != 0) ){
         echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
         $error_message .= "<a href=\"fm12.html#39\"> 964ww</a> kann nur zu Haupt- und</br>Zwischenterminen gegeben werden.</br>";
+      } elseif ((substr($sec333[$x], 0,3) == "962") and ($sec333[$x][3] == 2)){
+        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+        $error_message .= "<a href=\"fm12.html#39\"> 962ww</a> darf kein nach Wetter enthalten.</br>";
+      } elseif ((substr($sec333[$x], 0,3) == "960") and ($sec333[$x][3] == 2)){
+        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+        $error_message .= "<a href=\"fm12.html#39\"> 960ww</a> darf kein nach Wetter enthalten.</br>";
+      } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == $ww)){
+        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+        $error_message .= "<a href=\"fm12.html#39\"> 960ww</a> darf nicht gleich dem ww sein.</br>";
       } else {
         echo($sec333[$x] . " ");
       }
