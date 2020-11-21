@@ -1482,6 +1482,83 @@ function tr_func($tr){
   return $TR;
 }
 
+
+function ground2words($E,$E_strich,$SSS){
+  $ground=" ";
+  if (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9) or ($E_strich == "/")){
+    switch ($E) {
+      case 0:
+          $ground="Erdbodenzustand: trocken</br>";
+          break;
+      case 1:
+          $ground="Erdbodenzustand: feucht</br>";
+          break;
+      case 2:
+          $ground="Erdbodenzustand: nass</br>";
+          break;
+      case 3:
+          $ground="Erdbodenzustand: überflutet</br>";
+          break;
+      case 4:
+          $ground="Erdbodenzustand: gefroren</br>";
+          break;
+      case 5:
+          $ground="Erdbodenzustand: Glatteis oder Eisglätte</br>";
+          break;
+      case 6:
+          $ground="Erdbodenzustand: loser, trockener Sand</br>";
+          break;
+      case 7:
+          $ground="Erdbodenzustand: geschlossene dünne Sandschicht</br>";
+          break;
+      case 8:
+          $ground="Erdbodenzustand: geschlossene dicke Sandschicht</br>";
+          break;
+      case 9:
+          $ground="Erdbodenzustand: extrem trockener Boden mit Rissen</br>";
+          break;
+    }
+  }
+    if (($E_strich != -9) and ($E_strich != "/")){
+    switch ($E_strich) {
+      case 0:
+          $ground.="Boden mit Hagel/Graupel mehr als 50% bedeckt!!";
+          break;
+      case 1:
+          $ground.="Schneedecke: fest/nass, Reste " . $SSS ."cm</br>";
+          break;
+      case 2:
+          $ground.="Schneedecke: fest/nass, durchbrochen " . $SSS ."cm</br>";
+          break;
+      case 3:
+          $ground.="Schneedecke: fest/nass, gleichm&auml;&szlig;ig " . $SSS ."cm</br>";
+          break;
+      case 4:
+          $ground.="Schneedecke: fest/nass, ungleichm&auml;&szlig;ig " . $SSS ."cm</br>";
+          break;
+      case 5:
+          $ground.="Schneedecke: locker/trocken, Reste " . $SSS ."cm</br>";
+          break;
+      case 6:
+          $ground.="Schneedecke: locker/trocken, durchbrochen " . $SSS ."cm</br>";
+          break;
+      case 7:
+          $ground.="Schneedecke: locker/trocken, gleichm&auml;&szlig;ig " . $SSS ."cm</br>";
+          break;
+      case 8:
+          $ground.="Schneedecke: locker/trocken, ungleichm&auml;&szlig;ig " . $SSS ."cm</br>";
+          break;
+      case 9:
+          $ground.="geschlosssene Schneedecke mit hohen Verwehungen " . $SSS ."cm</br>";
+          break;
+    }
+  }
+  if (($SSS == 998) and ($E_strich == "/")){
+    $ground.="Schneedecke: Flecken</br>";
+  }    
+  return $ground;
+}
+
 ###################################################################
 #main function
 function synop ($fname,$hour,$day){
@@ -1664,7 +1741,7 @@ function synop ($fname,$hour,$day){
     $x++;
   }
  
-  $value="Wetter: ".ww2words ($ww)."</br>Sicht: ". visibility ($vv) ."</br>Bedeckung: ".$N."/8</br>Tiefste Wolke: ".height ($h)."</br>".group8er ($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$hh1,$hh2,$hh3,$hh4,$Cl,$Cm,$Ch,$ww)."</br>Niederschlag (1h): ";
+  $value="Wetter: ".ww2words ($ww)."</br>Sicht: ". visibility ($vv) ."</br>Bedeckung: ".$N."/8</br>Tiefste Wolke: ".height ($h)."</br>".group8er ($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$hh1,$hh2,$hh3,$hh4,$Cl,$Cm,$Ch,$ww);
   #echo(count($global). " " . $global[8][0]);
   #echo( $ix .$ir .$in);
 
@@ -1731,12 +1808,36 @@ function synop ($fname,$hour,$day){
   #333 section
   echo ("&nbsp&nbsp&nbsp" . $sec333[2] . " ");
   $x=3;
+  $E=-9;
+  $E_strich=-9;
+  $SSS=-999;
   while($x <= count($sec333)) {
     if ($sec333[$x][0] != "8") {
       if( ($sec333[$x][0] == "3") and (($hour % 6) == 0) ){
-        if ($sec333[$x][1] == "/") {
-          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $sec333[$x][1] . "</b>" . substr($sec333[$x], -3) . " ");
+        $E=$sec333[$x][1];
+      } elseif ( ($sec333[$x][0] == "4") and (($hour % 6) == 0) ){
+        $E_strich=$sec333[$x][1];
+        $SSS=substr($sec333[$x], -3,3);
+      }
+      $x++;
+    } else {
+      break;
+    }
+  }
+  $x=3;
+  while($x <= count($sec333)) {
+    if ($sec333[$x][0] != "8") {
+      if( ($sec333[$x][0] == "3") and (($hour % 6) == 0) ){
+        $value.= ground2words($E,$E_strich,$SSS);
+        if (($E == "/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9) or ($E_strich == "/"))){
+          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E . "</b>" . substr($sec333[$x], -3) . " ");
           $error_message .= "Erdbodenzustand fehlt.</br>";
+        } elseif (($E !=-9 and $E!="/") and (($E_strich == 0) or ($E_strich == 2) or ($E_strich == 3) or ($E_strich == 4) or ($E_strich > 5)) ){
+          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $sec333[$x][1] . "</b>" . substr($sec333[$x], -3) . " ");
+          $error_message .= "Bei einer Decke aus Schnee/Graupel/Hagel &uuml;ber 50%</br>muss der Erdbodenzustand E verXt werden!</br>";
+        } elseif (($E == 4 or $E == 5) and ($T > 10)){
+          echo($sec333[$x][0] . "<b style=\"color:orange;\">" . $E . "</b>" . substr($sec333[$x], -3) . " ");
+          $error_message .= "Tippfehler beim Erdbodenzustand?</br>";
         } else {
           echo($sec333[$x] . " ");
         }    
@@ -1748,6 +1849,25 @@ function synop ($fname,$hour,$day){
           } else {
             echo($sec333[$x] . " ");
           }
+      } elseif ( ($sec333[$x][0] == "4") and (($hour % 6) == 0) ){
+        if (($E == "/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9))){
+          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$x], -3) . " ");
+        } elseif (($E !=-9 and $E!="/") and (($E_strich == 0) or ($E_strich == 2) or ($E_strich == 3) or ($E_strich == 4) or ($E_strich > 5)) ){
+          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$x], -3) . " ");
+          if ($SSS >= 100 and $SSS < 997){
+            $error_message .= "Tippfehler bei der Schneeh&ouml;he.</br>";
+          }
+        } elseif (($E == "/") and ($E_strich == "/") and ($SSS != 998)){
+          echo($sec333[$x][0] . $E_strich . "<b style=\"color:red;\">" . substr($sec333[$x], -3) . "</b>");
+        } elseif ($SSS >= 100 and $SSS < 997){
+          echo($sec333[$x][0] . $E_strich . "<b style=\"color:red;\">" . substr($sec333[$x], -3) . "</b>");
+          $error_message .= "Tippfehler bei der Schneeh&ouml;he.</br>";
+        } elseif ( ($E_strich != "/") and ($SSS == 998)){
+          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E_strich . substr($sec333[$x], -3) . "</b>");
+          $error_message .= "Bei Resten muss E' verXt werden.</br>";
+        } else {
+          echo($sec333[$x]);
+        }
       } else {
         echo($sec333[$x] . " ");
       }
@@ -1763,7 +1883,13 @@ function synop ($fname,$hour,$day){
   }
   while($x <= count($sec333)) {
     if ($sec333[$x][0] != "8") {
-      echo($sec333[$x] . " ");
+      #sondergruppen
+      if ((substr($sec333[$x], 0,3) == "964") and (($hour % 3) != 0) ){
+        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+        $error_message .= "<a href=\"fm12.html#39\"> 964ww</a> kann nur zu Haupt- und</br>Zwischenterminen gegeben werden.</br>";
+      } else {
+        echo($sec333[$x] . " ");
+      }
     }
     $x++;
   }
@@ -1772,7 +1898,7 @@ function synop ($fname,$hour,$day){
   $x=3;
   while($x <= count($sec555)) {
     if (substr($sec555[$x], 0,1) == "1") {
-      $value.=rr1h(substr($sec555[$x], 1,3),substr($parts[1],12,2),substr($parts[1],10,2));
+      $value.= "</br>Niederschlag (1h): " . rr1h(substr($sec555[$x], 1,3),substr($parts[1],12,2),substr($parts[1],10,2));
       if ( (($ww >= 50 and $ww != 76 ) or ($ww[0] == 2 and $ww != 29 and $ww != 28)) and ($sec555[$x] == "10000")){
         echo("<b style=\"color:red;\">" . $sec555[$x] . "</b> ");
         $error_message .= "Unstimmigkeit zw. ww & rr 1h</br>RR wurde nicht registriert?</br>";
@@ -1780,6 +1906,13 @@ function synop ($fname,$hour,$day){
         echo("<b style=\"color:orange;\">" . $sec555[$x] . "</b> ");
       } else {
         echo($sec555[$x] . " ");
+      }
+    } elseif (substr($sec555[$x], 0,2) != "25"){
+      if ($E_strich >= 1 and $E_strich == "/"){
+        $error_message .= "Schneegl&auml;tte und Eisgl&auml;tte fehlen!</br>";
+      }
+      if ($E == 5){
+        $error_message .= "Glateis oder Eisgl&auml;tte fehlt!</br>";
       }
     } elseif (substr($sec555[$x], 0,2) != "24") {
       echo($sec555[$x] . " ");
