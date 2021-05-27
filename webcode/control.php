@@ -286,17 +286,17 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
   }
 
   #same height
-  if (($hh1 == $hh2) and ($C1 != 9 and $C2 != 9)) {
+  if (($hh1 == $hh2) and ($C1 != 9 and $C2 != 9) and $hh1 != -99 and $hh2 != -99) {
     $fhh1 = "<b class=\"alert\">" . $fhh1 . "</b>";
     $fhh2 = "<b class=\"alert\">" . $fhh2 . "</b>";
     $error_message .= "Wolken mit gleich hoher Untergrenze<br>zusammenfassen!</br>";
   }
-  if (($hh2 == $hh3) and ($C2 != 9 and $C3 != 9)) {
+  if (($hh2 == $hh3) and ($C2 != 9 and $C3 != 9) and $hh2 != -99 and $hh3 != -99) {
     $fhh2 = "<b class=\"alert\">" . $fhh2 . "</b>";
     $fhh3 = "<b class=\"alert\">" . $fhh3 . "</b>";
     $error_message .= "Wolken mit gleich hoher Untergrenze<br>zusammenfassen!</br>";
   }
-  if (($hh3 == $hh4) and ($C3 != 9 and $C4 != 9)) {
+  if (($hh3 == $hh4) and ($C3 != 9 and $C4 != 9)  and $hh3 != -99 and $hh4 != -99) {
     $fhh3 = "<b class=\"alert\">" . $fhh3 . "</b>";
     $fhh4 = "<b class=\"alert\">" . $fhh4 . "</b>";
     $error_message .= "Wolken mit gleich hoher Untergrenze<br>zusammenfassen!</br>";
