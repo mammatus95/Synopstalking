@@ -38,7 +38,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $error_message .= "Gewitterwolke C=9 fehlt in der 333-Sektion!</br>";
   }
   
-  if (($Cm == 3) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
+  if (($Cm == 3 or $Cm = 4) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
     if ($C1 == 4){
       $fC1="<b class=\"alert\">" . $C1 . "</b>";
     }
@@ -53,6 +53,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     }
     $error_message .= "As in der 333-Sektion verschl&uuml;sselt,</br>aber Cm=3 gemeldet.</br>";
   }
+  
 
   if ( ($Ch == 6 or $Ch == 7) and (True != ($C1 == 2 or $C2 == 2 or $C3 == 2 or $C4 == 2)) ){
     $fC1="<b class=\"warn\">" . $C1 . "</b>";
@@ -490,7 +491,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     }
   }
   
-  if (($Cm == 3) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
+  if (($Cm == 3 or $Cm = 4) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
     if ($C1 == 4){
       $fCm="<b class=\"alert\">" . $Cm . "</b>";
     }
