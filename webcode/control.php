@@ -37,6 +37,22 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fC3="<b class=\"alert\">" . $C3 . "</b>";
     $error_message .= "Gewitterwolke C=9 fehlt in der 333-Sektion!</br>";
   }
+  
+  if (($Cm == 3) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
+    if ($C1 == 4){
+      $fC1="<b class=\"alert\">" . $C1 . "</b>";
+    }
+    if ($C2 == 4){
+      $fC2="<b class=\"alert\">" . $C2 . "</b>";
+    }
+    if ($C3 == 4){
+      $fC3="<b class=\"alert\">" . $C3 . "</b>";
+    }
+    if ($C4 == 4){
+      $fC4="<b class=\"alert\">" . $C4 . "</b>";
+    }
+    $error_message .= "As in der 333-Sektion verschl&uuml;sselt,</br>aber Cm=3 gemeldet.</br>";
+  }
 
   if ( ($Ch == 6 or $Ch == 7) and (True != ($C1 == 2 or $C2 == 2 or $C3 == 2 or $C4 == 2)) ){
     $fC1="<b class=\"warn\">" . $C1 . "</b>";
@@ -471,6 +487,21 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
       $error_message .= "Vorrangordnung nicht beachtet!</br>C<sub><code>m</code></sub> muss 7 sein.</br>";
     } else{
       $fCm="<b class=\"warn\">" . $Cm . "</b>";
+    }
+  }
+  
+  if (($Cm == 3) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
+    if ($C1 == 4){
+      $fCm="<b class=\"alert\">" . $Cm . "</b>";
+    }
+    if ($C2 == 4){
+      $fCm="<b class=\"alert\">" . $Cm . "</b>";
+    }
+    if ($C3 == 4){
+      $fCm="<b class=\"alert\">" . $Cm . "</b>";
+    }
+    if ($C4 == 4){
+      $fCm="<b class=\"alert\">" . $Cm . "</b>";
     }
   }
   
@@ -1145,7 +1176,7 @@ function rr1h($rr,$h,$d) {
     } elseif (($day % 5)==0){
       $RR="<a class=\"n\" href=\"https://www.rotkaeppchen.de/fileadmin/_processed_/b/5/csm_csm_rks-trocken-kiwi_1260x540_aa8f6af7ba_cf37c21f56.jpg\">Trocken!</a>";
     } elseif (($day % 7)==0){
-      $RR="<a class=\"n\" href=\"https://files.ufz.de/~drought/SM_Lall_aktuell.png\">Dürre</a>";
+      $RR="<a class=\"n\" href=\"https://files.ufz.de/~drought/SM_Lall_aktuell.png\">D&uuml;rre</a>";
     } else {
       $RR="0.0mm";
     }
