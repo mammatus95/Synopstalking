@@ -38,7 +38,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $error_message .= "Gewitterwolke C=9 fehlt in der 333-Sektion!</br>";
   }
   
-  if (($Cm == 3 or $Cm = 4) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
+  if (($Cm == 3 or $Cm == 4) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
     if ($C1 == 4){
       $fC1="<b class=\"alert\">" . $C1 . "</b>";
     }
@@ -51,7 +51,11 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     if ($C4 == 4){
       $fC4="<b class=\"alert\">" . $C4 . "</b>";
     }
-    $error_message .= "As in der 333-Sektion verschl&uuml;sselt,</br>aber Cm=3 gemeldet.</br>";
+    if ($Cm == 3){
+      $error_message .= "As in der 333-Sektion verschl&uuml;sselt,</br>aber Cm=3 gemeldet.</br>";
+    }elseif ($Cm == 4){
+      $error_message .= "As in der 333-Sektion verschl&uuml;sselt,</br>aber Cm=4 gemeldet.</br>";
+    }
   }
   
 
@@ -234,7 +238,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
 
   if (($Nh < $N1) and ($Cl != 0 or $Cm != 0)){
     $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
-    $error_message .= $N1."/8 ".$C1." > N<sub><code>h</code></sub>(".$Nh.") </br>";
+    $error_message .= $N1."/8 " . $C1 . " > N<sub><code>h</code></sub>(".$Nh.") </br>";
   }
 
   if (($hh1 >=51) and ($hh1 < 56)){
@@ -491,7 +495,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     }
   }
   
-  if (($Cm == 3 or $Cm = 4) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
+  if (($Cm == 3 or $Cm == 4) and ($C1 == 4 or $C2 == 4 or $C3 == 4 or $C4 == 4)){
     if ($C1 == 4){
       $fCm="<b class=\"alert\">" . $Cm . "</b>";
     }
@@ -2027,6 +2031,7 @@ function synop ($fname,$hour,$day,$day_1){
       echo($ix2);
     }
   }
+
   list ($fN, $fh,$fvv,$error_message) = test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$error_message);
   echo ($fh . $fvv . " ");
   echo($fN . substr($global[2], -4) . " ");
@@ -2059,6 +2064,7 @@ function synop ($fname,$hour,$day,$day_1){
   }
 
   if ($in == "1"){
+                       # function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$error_message) {
     list ($group8,$error_message)=test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$error_message);
     echo ($group8);
   }

@@ -6,6 +6,17 @@
     <meta http-equiv="refresh" content="90">
     <base target="_blank">
     <link href="fontstyle.css" type="text/css" rel="stylesheet">
+    <script>
+      function PlaySound() {
+        var sound = document.getElementById("sound1");
+        sound.Play();
+      }
+      function beep() {
+        var snd = new Audio("audio/test_audio.wav");  
+        snd.play();
+      }
+    </script>
+    <embed src="audio/test_audio.wav" autostart="false" width="0" height="0" id="sound1" enablejavascript="true">
   </head>	
   <body>
     <!--http://www.met.fu-berlin.de/de/wetter/service/obs_10381/-->
@@ -18,7 +29,6 @@
       echo "<div class=\"h1\">Observation of Berlin-Dahlem in FM12 format</div>\n  </br></br>\n  <div>\n    <font>\n";
       echo "<h2><a class=\"n\" href=\"test.png\">Grober &Uuml;berblick &uuml;ber die F&auml;higkeiten</a></h2>\n";
       echo "<h2><a class=\"n\" href=\"cors.php\">COR Statistik</a></h2>\n";
-      echo "<h2><a class=\"n\" href=\"synopstegel.php\">Synops Tegel</a></h2>\n";
     ?>
       <table width="95%" align="center" cellspacing="9">
         <tr>
@@ -124,6 +134,7 @@
     </tr></td>
     <?php
       $day = date("d", $timestamp);
+      $day_1 = date("d", $timestamp - 60 * 60 * 24);
       $hour = date("H", $timestamp);
       $cor=0;
       #for ($x = 0; $x <= $hour; $x++) {
@@ -140,23 +151,26 @@
           #list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day);
         }
         try {
-          list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day);
+          list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day,$day_1);
           $cor += $cor_count;
+          echo "hi".$cor;
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
             echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 was submited too late!</b>";
+            echo "<script>  beep();  </script>\n";
           } else {
             echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
-            echo "<b>If you don't know why this happend, send a message to quali@met.fu-berln.de.</b></br></br>\n";
+            echo "<b>If you don't know why this happened, send a message to quali@met.fu-berlin.de.</b></br></br>\n";
           }
         }
-        echo("\n    </td>\n    <td>\n    ". $value ."\n    </td>\n    <td>\n    ". $error_message ."\n    </td>\n  </tr>\n");
+        echo("\n    </td>\n    <td>\n    ". $value ."\n    </td>\n    <td>\n    " . $error_message ."\n    </td>\n  </tr>\n");
       }
       echo("</table>\n");
       echo "Anzahl COR's: ".$cor." </br>\n";
       $cor=0;
       echo "</br><h2>Yesterday Synops</h2></br>\n  <table width=\"95%\" align=\"center\" cellspacing=\"9\">\n<tr><td></td><td>measurements</td><td>error message</td></tr>\n" ;
       $day= date("d", $timestamp - 60 * 60 * 24);
+      $day_1= date("d", $timestamp - 60 * 60 * 24 * 2);
       #for ($x = 0; $x <= 23; $x++) {
       for ($x = 23; $x >= 0; $x--) {
         $error_message=$value=$cor_count="";
@@ -171,18 +185,18 @@
           #list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day);
         }
         try {
-          list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day);
+          list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day,$day_1);
           $cor += $cor_count;
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
-            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 was submited too late!</b>";
+            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 report was submited too late!</b>";
           } else {
             echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
-            echo "<b>If you don't know why this happend, send a message to quali@met.fu-berln.de.</b></br></br>\n";
+            echo "<b>If you don't know why this happened, send a message to quali@met.fu-berln.de.</b></br></br>\n";
           }
         }
         echo("\n    </td>\n    <td>\n    ". $value ."\n    </td>\n    <td>\n    ". $error_message ."\n    </td>\n  </tr>\n");
-        $cor += $cor_count;
+
       }
       echo("</table>\n");
       echo "Anzahl COR's: ".$cor." </br>\n";
