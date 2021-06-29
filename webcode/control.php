@@ -855,7 +855,7 @@ function getww($fname){
 }
 
 
-function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$day_1,$error_message) {
+function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$day_1,$sec333,$error_message) {
   $fW1=$W1;
   $fW2=$W2;
   $fww=$ww;
@@ -1135,6 +1135,22 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     $error_message .= "Es geht nur 00, 11, oder 22.</br>";
   }
   
+  
+  #sondergruppen check
+  $x=3;
+  while($x <= count($sec333)) {
+    if ($sec333[$x][0] == "9") {
+      #sondergruppen
+      if ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == $ww)){
+        $fww="<b class=\"alert\">" . $ww . "</b>";
+      } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == "17") and ($ww <= 49) ){
+        $fww="<b class=\"alert\">" . $ww . "</b>";
+      } elseif ((substr($sec333[$x], 0,3) == "962") and (substr($sec333[$x], -2,1) == "4") and ($ww <= 40) ){
+        $fww="<b class=\"alert\">" . $ww . "</b>";
+      }
+    }
+    $x++;
+  }
   
   
   return array("7".$fww.$fW1.$fW2,$error_message);
@@ -2054,7 +2070,8 @@ function synop ($fname,$hour,$day,$day_1){
   }
 
   if ($ix == "1"){
-    list ($wwgroup,$error_message)=test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$day_1,$error_message);
+    list ($wwgroup,$error_message)=test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$day_1,$sec333,$error_message);    
+    
     echo ($wwgroup . " ");
     #if (test_ww($ww,$W1,$W2) == 1) {
     #  echo ("7" . $ww.$W1.$W2 . " ");
@@ -2161,6 +2178,12 @@ function synop ($fname,$hour,$day,$day_1){
       } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == $ww)){
         echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
         $error_message .= "<a href=\"fm12.html#39\"> 960ww</a> darf nicht gleich dem ww sein.</br>";
+      } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == "17") and ($ww <= 49) ){
+        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+        $error_message .= "ww=17 hat Vorrang vor ww=20 bis ww=49!</br>";
+      } elseif ((substr($sec333[$x], 0,3) == "962") and (substr($sec333[$x], -2,1) == "4") and ($ww <= 40) ){
+        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+        $error_message .= "ww=28 hat Vorrang vor ww=40</br>";
       } else {
         echo($sec333[$x] . " ");
       }
