@@ -2242,7 +2242,7 @@ function synop ($fname,$hour,$day,$day_1){
       $error_message .= "In den vergangen 6 Stunden wurde Niederschlag registriert, aber kein passendes W<sub>1</sub> gemeldet.</br>";
     }
     #Niederschlagsart fehlt?
-    if ( (($ww >= 20 and ($ww != 28 and ($ww[0] != 3) and ($ww[0] != '4'))) or ($W1 > 4 and ($W1 != 9)) ) and (substr($sec666[7], -1,1) == "/" or substr($sec666[7], -1,1) == 0) ) {
+    if ( (($ww >= 20 and ($ww != 28 and ($ww != 29 and $W1 < 3 and $W1 != 9 and $W2 < 3) and ($ww[0] != 3) and ($ww[0] != '4'))) or ($W1 > 4 and ($W1 != 9)) ) and (substr($sec666[7], -1,1) == "/" or substr($sec666[7], -1,1) == 0) ) {
       echo ("</br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp80000&nbsp1" . substr($sec666[7], 1,4) . "<b style=\"color:red;\">" . substr($sec666[7], -1,1) . "</b> ");
       $error_message .= "Niederschlagsart(6h) fehlt!</br>";
       $x=8;
