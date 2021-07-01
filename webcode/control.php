@@ -989,19 +989,19 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     if ( (($W1 == $W2) and ($W1 > 2)) and (($ww_1 < 30) or ($ww_2 < 30) or ($ww_3 < 30) or ($W1_1 < 3) or ($W1_2 < 3) ) ){
       $fW1="<b class=\"warn\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "W<sub><code>1</code></sub> = " . $W1 . " war nicht in den ersten</br>5 Stunden durchg&uuml;nig.</br>";
+      $error_message .= "W<sub><code>1</code></sub> = " . $W1 . " war nicht in den ersten</br>2 Stunden durchg&auml;nig.</br>";
     }
 
     if ( (($W1 == $W2) and ($W1 > 2)) and (($ww_1 < 30) or ($ww_2 < 30) or ($ww_3 < 30) or ($W2_1 < 3) or ($W2_2 < 3) ) ){
       $fW1="<b class=\"warn\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "W<sub><code>1</code></sub> = " . $W1 . " war nicht in den ersten</br>5 Stunden durchg&uuml;nig.</br>";
+      $error_message .= "W<sub><code>1</code></sub> = " . $W1 . " war nicht in den ersten</br>2 Stunden durchg&auml;nig.</br>";
     }
 
-    if ( (($W1 == $W2) and ($W1 > 2)) and ((ww2W($ww_1) != $W1) or (ww2W($ww_2) != $W1) or (ww2W($ww_3) != $W1) or ($W1_1 != $W2_1) or ($W1_2 != $W2_2) or ($W1 != $W1_1) or ($W1 != $W1_2) ) ){
+    if ( (($W1 == $W2) and ($W1 > 2)) and ($ww_1==91 or $ww_1==92 or $ww_1==93 or $ww_1==94) and ((ww2W($ww_1) != $W1) or (ww2W($ww_2) != $W1) or (ww2W($ww_3) != $W1) or ($W1_1 != $W2_1) or ($W1_2 != $W2_2) or ($W1 != $W1_1) or ($W1 != $W1_2) ) ){
       $fW1="<b class=\"warn\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "Umfangreich wie mg&ouml;glich, vor durchg&uuml;nig.</br>";
+      $error_message .= "Umfangreich wie m&ouml;glich, vor durchg&auml;nig.</br>";
     }
     
     if ( (($W1 == $W2) and ($W1 > 2)) and (($ww_1 < 30) or ($ww_2 < 30) or ($ww_3 < 30) or ($W1_1 < 2) or ($W1_2 < 2) or ($W2_1 < 2) or ($W2_2 < 2) or ($W1_1 != $W1_2) or ($W1_1 != $W2_1) or ($W1_1 != $W2_2) or ($W2_1 != $W2_2) or ($W2_1 != $W1_1) or ($W2_1 != $W2_2)) ){
@@ -1047,13 +1047,13 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     if ( (($W1 == $W2) and ($W1 > 2)) and (($ww_1 < 30) or ($ww_2 < 30) or ($ww_3 < 30) or ($ww_4 < 30) or ($ww_5 < 30) or ($ww_6 < 30) or ($W2_1 < 3) or ($W2_2 < 3) or ($W2_3 < 3) or ($W2_4 < 3) or ($W2_5 < 3) ) ){
       $fW1="<b class=\"warn\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "W<sub><code>1</code></sub> = " . $W1 . " war nicht in den ersten</br>5 Stunden durchg&uuml;nig.</br>";
+      $error_message .= "W<sub><code>1</code></sub> = " . $W1 . " war nicht in den ersten</br>5 Stunden durchg&auml;nig.</br>";
     }
 
-    if ( (($W1 == $W2) and ($W1 > 2)) and ((ww2W($ww_1) != $W1) or (ww2W($ww_2) != $W1) or (ww2W($ww_3) != $W1) or (ww2W($ww_4) != $W1) or (ww2W($ww_5) != $W1) or (ww2W($ww_6) != $W1) or ($W1_1 != $W2_1) or ($W1_2 != $W2_2) or ($W1_3 != $W2_3) or ($W1_4 != $W2_4) or ($W1_5 != $W2_5) or ($W1 != $W1_1) or ($W1 != $W1_2) or ($W1 != $W1_3) or ($W1 != $W1_4) or ($W1 != $W1_5)) ){
+    if ( (($W1 == $W2) and ($W1 > 2)) and ($ww_1==91 or $ww_1==92 or $ww_1==93 or $ww_1==94) and ((ww2W($ww_1) != $W1) or (ww2W($ww_2) != $W1) or (ww2W($ww_3) != $W1) or (ww2W($ww_4) != $W1) or (ww2W($ww_5) != $W1) or (ww2W($ww_6) != $W1) or ($W1_1 != $W2_1) or ($W1_2 != $W2_2) or ($W1_3 != $W2_3) or ($W1_4 != $W2_4) or ($W1_5 != $W2_5) or ($W1 != $W1_1) or ($W1 != $W1_2) or ($W1 != $W1_3) or ($W1 != $W1_4) or ($W1 != $W1_5)) ){
       $fW1="<b class=\"warn\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "Umfangreich wie mg&ouml;glich, vor durchg&uuml;nig.</br>";
+      $error_message .= "Umfangreich wie m&ouml;glich, vor durchg&auml;nig.</br>";
     }
     
     if (($W1 < $W1_3) and ($W1 != 1)){
@@ -2180,7 +2180,7 @@ function synop ($fname,$hour,$day,$day_1){
         $error_message .= "<a href=\"fm12.html#39\"> 960ww</a> darf nicht gleich dem ww sein.</br>";
       } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == "17") and ($ww <= 49) ){
         echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
-        $error_message .= "ww=17 hat Vorrang vor ww=20 bis ww=49!</br>";
+        $error_message .= "ww=17 hat Vorrang vor</br>ww=20 bis ww=49!</br>";
       } elseif ((substr($sec333[$x], 0,3) == "962") and (substr($sec333[$x], -2,1) == "4") and ($ww <= 40) ){
         echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
         $error_message .= "ww=28 hat Vorrang vor ww=40</br>";
