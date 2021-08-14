@@ -153,10 +153,9 @@
         try {
           list ($error_message, $value, $cor_count) = synop(sprintf("obs_".$day."%02s.txt", $x),$x,$day,$day_1);
           $cor += $cor_count;
-          echo "hi".$cor;
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
-            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 was submited too late!</b>";
+            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 has been submitted too late!</b>";
             echo "<script>  beep();  </script>\n";
           } else {
             echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
@@ -189,7 +188,7 @@
           $cor += $cor_count;
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
-            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 report was submited too late!</b>";
+            echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 report has been submitted too late!</b>";
           } else {
             echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
             echo "<b>If you don't know why this happened, send a message to quali@met.fu-berln.de.</b></br></br>\n";
