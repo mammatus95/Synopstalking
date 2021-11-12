@@ -693,8 +693,9 @@ function test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$N1,$N2,$N3,$N4,$error_message) {
     $error_message .= "Himmel nicht erkennbar -> keine Wolken (N muss 9).</br>";
   }
   
-  if ( (($ww != 43) xor ($ww != 45) xor ($ww != 47) xor ($ww != 49) xor ($ww != 82) xor ($ww >= 95)) and ($N == 9) ){
+  if ( (($ww != 43) and ($ww != 45) and ($ww != 47) and ($ww != 49) and ($ww != 50) and ($ww != 51) and ($ww != 82) and ($ww >= 95)) and ($N == 9) ){
     $fN="<b class=\"warn\">" . $N . "</b>";
+    $error_message .= "hi";
   }
   
   #drizzel
@@ -974,10 +975,22 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   if ( ($ww >= 49 or $ww == 16) and ($N == 0)){
     $fww="<b class=\"alert\">" . $ww . "</b>";
   }
-  if ( (($ww == 43) or ($ww == 45) or ($ww == 47) or ($ww == 49)) xor ($N == 9) ){
+  #fog and drizzel
+  if ( (($ww == 43) or ($ww == 45) or ($ww == 47) or ($ww == 49)) xor ($N == 9) ){     
+
     if ($ww >= 50){
-      $fww="<b class=\"warn\">" . $ww . "</b>";
-      $error_message .= "M&ouml;glicherweise war ww 41, 45, 47 oder 49 gemeint.</br>";
+      $x=3;
+      while($x <= count($sec333)) {
+        if ($sec333[$x][0] == "9") {
+          if ((substr($sec333[$x], 0,3) == "960") and ((substr($sec333[$x], -2,2) == 43) or (substr($sec333[$x], -2,2) == 45) or (substr($sec333[$x], -2,2) == 47) or (substr($sec333[$x], -2,2) == 49)) ){
+            break;
+          } else {
+            $fww="<b class=\"warn\">" . $ww . "</b>";
+            $error_message .= "M&ouml;glicherweise war ww 41, 45, 47 oder 49 gemeint.</br>";
+          }
+        }
+      $x++;
+      }
     } else {
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Himmel nicht erkennbar -> keine Wolken (N muss 9).</br>";
@@ -2140,54 +2153,54 @@ function synop ($fname,$hour,$day,$day_1){
       break;
     }
   }
-  $x=3;
-  while($x <= count($sec333)) {
-    if ($sec333[$x][0] != "8") {
-      if( ($sec333[$x][0] == "3") and (($hour % 6) == 0) ){
+  $iter_333=3; #iterator only for groups in section333
+  while($iter_333 <= count($sec333)) {
+    if ($sec333[$iter_333][0] != "8") {
+      if( ($sec333[$iter_333][0] == "3") and (($hour % 6) == 0) ){
         $value.= ground2words($E,$E_strich,$SSS);
         if (($E ==-9 or $E =="/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9) or ($E_strich == "/"))){
-          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E . "</b>" . substr($sec333[$x], -3) . " ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Erdbodenzustand fehlt.</br>";
         } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){
-          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $sec333[$x][1] . "</b>" . substr($sec333[$x], -3) . " ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $sec333[$iter_333][1] . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Bei einer Decke aus Schnee/Graupel/Hagel &uuml;ber 50%</br>muss der Erdbodenzustand E verXt werden!</br>";
         } elseif (($E == 4 or $E == 5) and ($T > 10)){
-          echo($sec333[$x][0] . "<b style=\"color:orange;\">" . $E . "</b>" . substr($sec333[$x], -3) . " ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:orange;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Tippfehler beim Erdbodenzustand?</br>";
         } else {
-          echo($sec333[$x] . " ");
+          echo($sec333[$iter_333] . " ");
         }    
-      } elseif ( ($sec333[$x][0] == "6") and (( ($hour-3) % 6) == 0) ){
-        if ( (($sec333[$x] != "60007") and (($ww < 20) and ($W1 < 5) and ($W2 < 5))) or 
-             (($sec333[$x] == "60007") and (($ww >= 50) or ($W1 >= 5 and $W1 < 9) or ($W2 >= 5))) ) {
-            echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      } elseif ( ($sec333[$iter_333][0] == "6") and (( ($hour-3) % 6) == 0) ){
+        if ( (($sec333[$iter_333] != "60007") and (($ww < 20) and ($W1 < 5) and ($W2 < 5))) or 
+             (($sec333[$iter_333] == "60007") and (($ww >= 50) or ($W1 >= 5 and $W1 < 9) or ($W2 >= 5))) ) {
+            echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
             $error_message .= "3h RR registriert.</br>";
           } else {
-            echo($sec333[$x] . " ");
+            echo($sec333[$iter_333] . " ");
           }
-      } elseif ( ($sec333[$x][0] == "4") and (($hour % 6) == 0) ){
+      } elseif ( ($sec333[$iter_333][0] == "4") and (($hour % 6) == 0) ){
         if (($E == "/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9))){
-          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$x], -3) . " ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$iter_333], -3) . " ");
         }elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){
-          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$x], -3) . " ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$iter_333], -3) . " ");
           if ($SSS >= 100 and $SSS < 997){
             $error_message .= "Tippfehler bei der Schneeh&ouml;he.</br>";
           }
         } elseif (($E == "/") and ($E_strich == "/") and ($SSS != 998)){
-          echo($sec333[$x][0] . $E_strich . "<b style=\"color:red;\">" . substr($sec333[$x], -3) . "</b> ");
+          echo($sec333[$iter_333][0] . $E_strich . "<b style=\"color:red;\">" . substr($sec333[$iter_333], -3) . "</b> ");
         } elseif ($SSS >= 100 and $SSS < 997){
-          echo($sec333[$x][0] . $E_strich . "<b style=\"color:red;\">" . substr($sec333[$x], -3) . "</b> ");
+          echo($sec333[$iter_333][0] . $E_strich . "<b style=\"color:red;\">" . substr($sec333[$iter_333], -3) . "</b> ");
           $error_message .= "Tippfehler bei der Schneeh&ouml;he.</br>";
         } elseif ( ($E_strich != "/" and $E_strich != "1") and ($SSS == 998)){
-          echo($sec333[$x][0] . "<b style=\"color:red;\">" . $E_strich . substr($sec333[$x], -3) . "</b> ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . substr($sec333[$iter_333], -3) . "</b> ");
           $error_message .= "Bei Resten muss E' verXt werden.</br>";
         } else {
-          echo($sec333[$x] . " ");
+          echo($sec333[$iter_333] . " ");
         }
       } else {
-        echo($sec333[$x] . " ");
+        echo($sec333[$iter_333] . " ");
       }
-      $x++;
+      $iter_333++;
     } else {
       break;
     }
@@ -2197,32 +2210,32 @@ function synop ($fname,$hour,$day,$day_1){
     list($back8,$error_message) = test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh,$Cl,$Cm,$Ch,$error_message);
     echo ($back8);
   }
-  while($x <= count($sec333)) {
-    if ($sec333[$x][0] != "8") {
+  while($iter_333 <= count($sec333)) {
+    if ($sec333[$iter_333][0] != "8") {
       #sondergruppen
-      if ((substr($sec333[$x], 0,3) == "964") and (($hour % 3) != 0) ){
-        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      if ((substr($sec333[$iter_333], 0,3) == "964") and (($hour % 3) != 0) ){
+        echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
         $error_message .= "<a href=\"fm12.html#39\"> 964ww</a> kann nur zu Haupt- und</br>Zwischenterminen gegeben werden.</br>";
-      } elseif ((substr($sec333[$x], 0,3) == "962") and ($sec333[$x][3] == 2)){
-        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      } elseif ((substr($sec333[$iter_333], 0,3) == "962") and ($sec333[$iter_333][3] == 2)){
+        echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
         $error_message .= "<a href=\"fm12.html#39\"> 962ww</a> darf kein nach Wetter enthalten.</br>";
-      } elseif ((substr($sec333[$x], 0,3) == "960") and ($sec333[$x][3] == 2)){
-        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      } elseif ((substr($sec333[$iter_333], 0,3) == "960") and ($sec333[$iter_333][3] == 2)){
+        echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
         $error_message .= "<a href=\"fm12.html#39\"> 960ww</a> darf kein nach Wetter enthalten.</br>";
-      } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == $ww)){
-        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      } elseif ((substr($sec333[$iter_333], 0,3) == "960") and (substr($sec333[$iter_333], -2,2) == $ww)){
+        echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
         $error_message .= "<a href=\"fm12.html#39\"> 960ww</a> darf nicht gleich dem ww sein.</br>";
-      } elseif ((substr($sec333[$x], 0,3) == "960") and (substr($sec333[$x], -2,2) == "17") and ($ww <= 49) ){
-        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      } elseif ((substr($sec333[$iter_333], 0,3) == "960") and (substr($sec333[$iter_333], -2,2) == "17") and ($ww <= 49) ){
+        echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
         $error_message .= "ww=17 hat Vorrang vor</br>ww=20 bis ww=49!</br>";
-      } elseif ((substr($sec333[$x], 0,3) == "962") and (substr($sec333[$x], -2,1) == "4") and ($ww <= 40) ){
-        echo(" <b style=\"color:red;\">" . $sec333[$x] . "</b> ");
+      } elseif ((substr($sec333[$iter_333], 0,3) == "962") and (substr($sec333[$iter_333], -2,1) == "4") and ($ww <= 40) ){
+        echo(" <b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
         $error_message .= "ww=28 hat Vorrang vor ww=40</br>";
       } else {
-        echo($sec333[$x] . " ");
+        echo($sec333[$iter_333] . " ");
       }
     }
-    $x++;
+    $iter_333++;
   }
   $sec555 = explode(" ", $parts[5]);
   echo("</br>&nbsp&nbsp&nbsp&nbsp" . $sec555[2] . " " );
