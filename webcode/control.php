@@ -240,7 +240,28 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
     $error_message .= $N1."/8 " . $C1 . " > N<sub><code>h</code></sub>(".$Nh.") </br>";
   }
-
+  if (($Nh < $N1) and ($C == 6 or $C == 7 or $C == 8 or $C == 9)){
+    $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
+    $error_message .= $N1."/8 in der 1. 8er Gruppe</br>ist gr&ouml;&szlig;er als Nh=".$Nh."/8 </br>";
+  }
+  #total cloud cover
+  if ($N < $N1){
+    $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
+    $error_message .= $N1."/8 in der 1. 8er Gruppe</br>ist gr&ouml;&szlig;er als die Gesamtbedeckung N=".$N."/8 </br>";
+  }
+  if ($N < $N2){
+    $fN2 = "<b class=\"alert\">" . $N2 . "</b>";
+    $error_message .= $N2."/8 in der 2. 8er Gruppe</br>ist gr&ouml;&szlig;er als die Gesamtbedeckung N=".$N."/8 </br>";
+  }
+  if ($N < $N3){
+    $fN3 = "<b class=\"alert\">" . $N3 . "</b>";
+    $error_message .= $N3."/8 in der 3. 8er Gruppe</br>ist gr&ouml;&szlig;er als die Gesamtbedeckung N=".$N."/8 </br>";
+  }
+  if ($N < $N4){
+    $fN4 = "<b class=\"alert\">" . $N4 . "</b>";
+    $error_message .= $N4."/8 in der 4. 8er Gruppe</br>ist gr&ouml;&szlig;er als die Gesamtbedeckung N=".$N."/8 </br>";
+  }
+  
   if (($hh1 >=51) and ($hh1 < 56)){
     $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
     $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
@@ -635,7 +656,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
 
 
 
-function test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$error_message) {
+function test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$N1,$N2,$N3,$N4,$error_message) {
   $fh=$h;
   $fN=$N;
   $fvv=$vv;
@@ -712,6 +733,19 @@ function test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$error_message) {
     } else {
       $error_message .= "H&ouml;he tiefster Wolken verschl&uuml;sselt,</br>aber keine Wolken gemeldet.</br>";
     }
+  }
+  
+  if ($N < $N1){
+    $fN = "<b class=\"warn\">" . $N . "</b>";
+  }
+  if ($N < $N2){
+    $fN = "<b class=\"warn\">" . $N . "</b>";
+  }
+  if ($N < $N3){
+    $fN = "<b class=\"warn\">" . $N . "</b>";
+  }
+  if ($N < $N4){
+    $fN = "<b class=\"warn\">" . $N . "</b>";
   }
   
   if ( $N == "/"){
@@ -2048,7 +2082,7 @@ function synop ($fname,$hour,$day,$day_1){
     }
   }
 
-  list ($fN, $fh,$fvv,$error_message) = test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$error_message);
+  list ($fN, $fh,$fvv,$error_message) = test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$N1,$N2,$N3,$N4,$error_message);
   echo ($fh . $fvv . " ");
   echo($fN . substr($global[2], -4) . " ");
   echo ($global[3] . " " . $global[4] . " " . $global[5] . " " . $global[6] . " " );
