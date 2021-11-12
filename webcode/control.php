@@ -1227,10 +1227,10 @@ function rr1h($rr,$h,$d) {
       }else {
         $RR="Nicht der Rede wert";
       }
-    }
+    }    
   } elseif ($rr == "000"){
     if (($day % 6)==0){
-      $RR="<a class=\"n\" href=\"https://www.ab-in-den-urlaub.de/magazin/wp-content/uploads/2019/04/1554381902_Sahara-W%C3%BCste.jpg\">Steppe</a>";
+      $RR="<a class=\"n\" href=\"https://www.youtube.com/watch?v=Em5m0nvRfek\">&iquest;Was tun wir hier eigentlich?</a>";
     } elseif (($day % 9)==0){
       $RR="au&szlig;er langeweile, nix gewesen";
     } elseif (($day % 2)==0){
@@ -1310,13 +1310,15 @@ function height ($h){
   }
   return $H;
 }
+
+
 function ww2words ($ww){
   switch ($ww) {
     case 0: $WW="langweilig"; break;
     case 1: $WW="abnehmend"; break;
     case 2: $WW="unver&auml;ndert"; break;
     case 3: $WW="zunehmend"; break;
-    case 4: $WW="Sicht durch Rauch/Asche vermindert"; break;
+    case 4: $WW="<a class=\"n\" href=\"https://www.pyroweb.de/media/images/item-detail/grosser-rauchtopf-pyrorauch-xl200-schwarz-MXM2477.jpg\">Sicht durch Rauch/Asche vermindert</a>"; break;
     case 5: $WW="trockener Dunst"; break;
     case 6: $WW="verbreiteter Schwebstaub"; break;
     case 7: $WW="Staub oder Sand"; break;
@@ -1780,25 +1782,25 @@ function ground2words($E,$E_strich,$SSS){
   if (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9) or ($E_strich == "/")){
     switch ($E) {
       case 0:
-          $ground="Erdbodenzustand: trocken</br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.westend61.de/images/0001263716l/acacia-tree-and-desert-landscape-near-masada-israel-CAVF63601.jpg\">trocken</a></br>";
           break;
       case 1:
-          $ground="Erdbodenzustand: feucht</br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://koniferen-berlin.de/images/Feuchte_B%C3%B6den_z.B._Pflanzen.jpg\">feucht</a></br>";
           break;
       case 2:
           $ground="Erdbodenzustand: nass</br>";
           break;
       case 3:
-          $ground="Erdbodenzustand: überflutet</br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.moz.de/imgs/38/8/6/8/8/6/3/5/9/tok_89246d0ba0e2c1efd86804bee588f399/w1176_h662_x750_y486_bln-210721-hochwasser.JPG-ad8f6ca64a613d07.jpeg\">überflutet</a></br>";
           break;
       case 4:
-          $ground="Erdbodenzustand: gefroren</br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://image.freepik.com/fotos-kostenlos/frost-an-einem-fenster_53876-88656.jpg\">gefroren</a></br>";
           break;
       case 5:
-          $ground="Erdbodenzustand: Glatteis oder Eisglätte</br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.stuttgarter-zeitung.de/media.media.1e3b768d-1b12-4ec8-9a9a-81acd577f20f.original1024.jpg\">Glatteis oder Eisglätte</a></br>";
           break;
       case 6:
-          $ground="Erdbodenzustand: loser, trockener Sand</br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.eskp.de/fileadmin/_processed_/5/3/csm_wueste1-imago67813130_l_7bb25800e7.jpg\">loser, trockener Sand</a></br>";
           break;
       case 7:
           $ground="Erdbodenzustand: geschlossene dünne Sandschicht</br>";
@@ -1890,7 +1892,7 @@ function synop ($fname,$hour,$day,$day_1){
   $ir2 = intval($global[1][0]); #rain groups
   $ix2 = intval($global[1][1]); #typ of station
   if ($ix2 == 6){
-    throw new Exception("</br></br>Automatenmeldung wurde verschickt!</br></br> Bitte Automatenmeldung löschen und FM12 mit CCA rausschicken!</br>" . $ix2);
+    throw new Exception("</br></br><a class=\"n\" href=\"https://www.youtube.com/watch?v=Em5m0nvRfek\">Automatenmeldung wurde verschickt!</a></br></br> Bitte Automatenmeldung löschen und FM12 mit CCA rausschicken!</br>" . $ix2);
   }
   $h=$global[1][2];            #height of lowest cloud layer
   $vv=substr($global[1], -2);  #visibility
@@ -2005,7 +2007,7 @@ function synop ($fname,$hour,$day,$day_1){
       $ir=1;
       $in=0;
     }else{
-      throw new Exception("Troubles with the groups in the global section!");
+      throw new Exception("<a class=\"n\" href=\"https://www.youtube.com/watch?v=Em5m0nvRfek\">Troubles with the groups in the global section!</a>");
     }
   } elseif (count($global) == "8") {
     $ix=2;
