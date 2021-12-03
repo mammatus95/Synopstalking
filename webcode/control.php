@@ -31,7 +31,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fC1="<b class=\"warn\">" . $C1 . "</b>";
     $fC2="<b class=\"warn\">" . $C2 . "</b>";
     $fC3="<b class=\"warn\">" . $C3 . "</b>";
-    $error_message .= "Möglicherweise Sc oder St vergessen?</br>";#siehe unten
+    $error_message .= "M&ouml;glicherweise Sc oder St vergessen?</br>";#siehe unten
   }
 
   if ( ($Cl == 9 or $Cl == 3) and (True != ($C1 == 9 or $C2 == 9 or $C3 == 9 or $C4 == 9)) ){
@@ -213,7 +213,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fC1 = "<b class=\"warn\">" . $C1 . "</b>";
     $fC2 = "<b class=\"warn\">" . $C2 . "</b>";
     $fC3 = "<b class=\"warn\">" . $C3 . "</b>";
-    $error_message .= "St wird zu den stabilen Wolkenarten gezählt.</br>Hochnebel über Cb-Untergrenze macht kein Sinn!</br>";
+    $error_message .= "St wird zu den stabilen Wolkenarten gez&auml;hlt.</br>Hochnebel &uuml;ber Cb-Untergrenze macht kein Sinn!</br>";
   }
 
   if (($C1 == 8 or  $C1 == 9  or $C1 == 6) and ($hh1 > 59)){
