@@ -18,10 +18,12 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
   if (($C1 == 8) and ($N1 >= 7)){
     $fC1 = "<b class=\"warn\">" . $C1 . "</b>";
     $fN1 = "<b class=\"warn\">" . $N1 . "</b>";
+    $error_message .= "7/8 Cu ist eig. 7/8 Sc</br>";
   }
   if (($C2 == 8) and ($N2 >= 7)){
     $fC2 = "<b class=\"warn\">" . $C2 . "</b>";
     $fN2 = "<b class=\"warn\">" . $N2 . "</b>";
+    $error_message .= "7/8 Cu ist eig. 7/8 Sc</br>";
   }
 
   #Cl,Cm,Ch
@@ -29,6 +31,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fC1="<b class=\"warn\">" . $C1 . "</b>";
     $fC2="<b class=\"warn\">" . $C2 . "</b>";
     $fC3="<b class=\"warn\">" . $C3 . "</b>";
+    $error_message .= "Möglicherweise Sc oder St vergessen?</br>";#siehe unten
   }
 
   if ( ($Cl == 9 or $Cl == 3) and (True != ($C1 == 9 or $C2 == 9 or $C3 == 9 or $C4 == 9)) ){
@@ -201,8 +204,16 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     }
   }
 
-  if (($C2 == 7) and ($C1 != 7)){
+  if (($C2 == 7) and ($C1 != 7 and $C1 != 8) ){
     $fC2 = "<b class=\"warn\">" . $C2 . "</b>";
+    $error_message .= "St erst in der 2. Schicht</br>";
+  }
+
+  if ( (($C1 == 9) and ($C2 == 7 or $C3 == 7)) or (($C2 == 9) and ($C3 == 7)) ){
+    $fC1 = "<b class=\"warn\">" . $C1 . "</b>";
+    $fC2 = "<b class=\"warn\">" . $C2 . "</b>";
+    $fC3 = "<b class=\"warn\">" . $C3 . "</b>";
+    $error_message .= "St wird zu den stabilen Wolkenarten gezählt.</br>Hochnebel über Cb-Untergrenze macht kein Sinn!</br>";
   }
 
   if (($C1 == 8 or  $C1 == 9  or $C1 == 6) and ($hh1 > 59)){
@@ -216,6 +227,14 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
   if (($C3 == 8 or  $C3 == 9  or $C3 == 6) and ($hh3 > 59)){
     $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
     $error_message .= "M&ouml;glicherweise Tippfehler bei der Wolkenh&ouml;he.</br>";
+  }
+
+  if ( (($hh3 < 50) and (abs($hh3-$hh1) < 3)) or (($hh3 > 60) and (abs($hh3-$hh1) < 3)) ){
+    $fhh1 = "<b class=\"warn\">" . $hh1 . "</b>";
+    $fhh2 = "<b class=\"warn\">" . $hh2 . "</b>";
+    $fhh3 = "<b class=\"warn\">" . $hh3 . "</b>";
+
+    $error_message .= "Wolkenschichten zu nahe beieinander.</br>Bei allem Respekt, so gut kannst Du nicht die Schichten unterscheiden.</br>";
   }
 
   if ( ($Cl == 0) and ($C1 >= 6) ){
@@ -264,34 +283,34 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
   
   if (($hh1 >=51) and ($hh1 < 56)){
     $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   if (($hh2 >=51) and ($hh2 < 56)){
     $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   if (($hh3 >=51) and ($hh3 < 56)){
     $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   if (($hh4 >=51) and ($hh4 < 56)){
     $fhh4 = "<b class=\"alert\">" . $hh4 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> Höhen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   #heights
   if ($hh1 > $hh2 and $hh2 != -99){
     $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
     $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
-    $error_message .= "Achtergruppen Bitte nach der Höhe sortiert melden.</br>";
+    $error_message .= "Achtergruppen Bitte nach der H&ouml;he sortiert melden.</br>";
   }
   if ($hh2 > $hh3 and $hh3 != -99){
     $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
     $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
-    $error_message .= "Achtergruppen Bitte nach der Höhe sortiert melden.</br>";
+    $error_message .= "Achtergruppen Bitte nach der H&ouml;he sortiert melden.</br>";
   }
 
   #height
@@ -443,9 +462,9 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     $error_message .= "C<sub><code>l</code></sub> oder C<sub><code>m</code></sub> d&uuml;rfen nicht / gesetzt werden.</br>";
   }
 
-  if (($Cm == 2) and (($ww < 55) and ($ww != 14 and $ww != 15  and $ww != 16 and $ww[0] != 2)) and ($C1 == 5 or $C2 == 5 or $C3 == 5 or $C4 == 5)){
+  if (($Cm == 2) and (($ww < 50) and ($ww != 14 and $ww != 15  and $ww != 16 and $ww[0] != 2)) and ($C1 == 5 or $C2 == 5 or $C3 == 5 or $C4 == 5)){
     $fCm="<b class=\"warn\">" . $Cm . "</b>";
-    $error_message .= "ww .</br>";
+    #$error_message .= "ww .</br>";
   }
 
   if ( ($Nh > 0) and (($Cl == 0) and ($Cm == 0)) ){
@@ -896,7 +915,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   $fww=$ww;
 
   #nimbustratus
-  if (($Cm == 2) and (($ww < 56) and ($ww != 14 and $ww != 15  and $ww != 16 and $ww[0] != 2)) ){
+  if (($Cm == 2) and (($ww < 50) and ($ww != 14 and $ww != 15  and $ww != 16 and $ww[0] != 2)) ){
     $fww="<b class=\"warn\">" . $ww . "</b>";
     $error_message .= "Aus Ns f&auml;llt immer Niederschlag (Falls Ns gesehen).</br>";
 
@@ -1206,6 +1225,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
 function rr1h($rr,$h,$d) {
   $RR=-99;
   $day = date("j");#j #N
+  $month = date("n");
   $week = date("W");
   #if ("21" <= $h){
   #  $day+=1;
@@ -1222,10 +1242,10 @@ function rr1h($rr,$h,$d) {
     }elseif ("17" == $h) {
       $RR="<a class=\"n\" href=\"https://www.fotocommunity.de/photo/wie-ein-tropfen-auf-den-heissen-stein-monika-b-l/19747804\">hom&ouml;opathische Dosen</a>";
     }else {
-      if (($W % 2)==0){
+      if (($week % 2)==0){
         $RR="<a class=\"n\" href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">99.9 mm</a>";
       }else {
-        $RR="Nicht der Rede wert";
+        $RR="<a class=\"n\" href=\"https://i.ytimg.com/vi/iRC_ImK2hKA/maxresdefault.jpg\">Nicht der Rede wert</a>";
       }
     }    
   } elseif ($rr == "000"){
@@ -1240,7 +1260,7 @@ function rr1h($rr,$h,$d) {
         $RR="schon wieder trocken:(";
       }
     } elseif (($day % 3)==0){
-      $RR="schon wieder trocken:(";
+      $RR="schon wieder trocken :((";
     } elseif (($day % 5)==0){
       $RR="<a class=\"n\" href=\"https://www.rotkaeppchen.de/fileadmin/_processed_/b/5/csm_csm_rks-trocken-kiwi_1260x540_aa8f6af7ba_cf37c21f56.jpg\">Trocken!</a>";
     } elseif (($day % 7)==0){
@@ -1249,7 +1269,11 @@ function rr1h($rr,$h,$d) {
       $RR="0.0mm";
     }
   } elseif ($rr >= "100"){
-    $RR="<a class=\"n\" href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">" . substr($rr, 0,2) . "." . substr($rr, 2,1) . " mm</a>";
+    if (($month % 2)==0){
+      $RR="<a class=\"n\" href=\"https://i.ytimg.com/vi/iRC_ImK2hKA/maxresdefault.jpg\">" . substr($rr, 0,2) . "." . substr($rr, 2,1) . " mm</a>";
+    }else{
+      $RR="<a class=\"n\" href=\"https://media1.tenor.com/images/ae53ebaa64e1dfcb220163a09ce0a12d/tenor.gif?itemid=11479864\">" . substr($rr, 0,2) . "." . substr($rr, 2,1) . " mm</a>";
+    }
   } else {
     $RR=substr($rr, 0,2) . "." . substr($rr, 2,1) . "mm";
   }
@@ -1318,7 +1342,7 @@ function ww2words ($ww){
     case 1: $WW="abnehmend"; break;
     case 2: $WW="unver&auml;ndert"; break;
     case 3: $WW="zunehmend"; break;
-    case 4: $WW="<a class=\"n\" href=\"https://www.pyroweb.de/media/images/item-detail/grosser-rauchtopf-pyrorauch-xl200-schwarz-MXM2477.jpg\">Sicht durch Rauch/Asche vermindert</a>"; break;
+    case 4: $WW="Sicht durch Rauch/Asche vermindert</br><img width=\"40%\" height=\"40%\" src =\"https://www.pyroweb.de/media/images/item-detail/grosser-rauchtopf-pyrorauch-xl200-schwarz-MXM2477.jpg\" alt=\"\"/>"; break;
     case 5: $WW="trockener Dunst"; break;
     case 6: $WW="verbreiteter Schwebstaub"; break;
     case 7: $WW="Staub oder Sand"; break;
@@ -1374,22 +1398,22 @@ function ww2words ($ww){
     case 57: $WW="m&auml;&szlig;iger oder starker gefrierender Spr&uuml;hregen"; break;
     case 58: $WW="leichter Regen</br> mit Spr&uuml;hregen"; break;
     case 59: $WW="m&auml;&szlig;iger/starker Regen</br> mit Spr&uuml;hregen"; break;
-    case 60: $WW="unterbrochener l. Regen/</br>einzelne Regentropfen"; break;
-    case 61: $WW="leichter Regen"; break;
-    case 62: $WW="m&auml;&szlig;iger Regen"; break;
-    case 63: $WW="m&auml;&szlig;iger Regen"; break;
-    case 64: $WW="starker Regen"; break;
-    case 65: $WW="starker Regen"; break;
+    case 60: $WW="unterbrochener l. Regen/</br>einzelne Regentropfen</br><img width=\"40%\" height=\"40%\" src =\"https://cdnext.funpot.net/bild/funpot0000415342/42/Lustiger_Regentropfen.gif\" alt=\"\"/>"; break;
+    case 61: $WW="leichter Regen</br><img width=\"40%\" height=\"40%\" src =\"https://acegif.com/wp-content/uploads/rainy-6.gif\" alt=\"\"/>"; break;
+    case 62: $WW="m&auml;&szlig;iger Regen</br><img width=\"40%\" height=\"40%\" src =\"https://i1.wp.com/www.verenas-welt.com/wp-content/uploads/2011/08/rainV2.gif\" alt=\"\"/>"; break;
+    case 63: $WW="m&auml;&szlig;iger Regen</br><img width=\"40%\" height=\"40%\" src =\"https://i1.wp.com/www.verenas-welt.com/wp-content/uploads/2011/08/rainV2.gif\" alt=\"\"/>"; break;
+    case 64: $WW="starker Regen</br><img width=\"40%\" height=\"40%\" src =\"https://i.pinimg.com/originals/f5/2f/0d/f52f0d49529f7111c4539d46a79856e4.gif\" alt=\"\"/>"; break;
+    case 65: $WW="starker Regen</br><img width=\"40%\" height=\"40%\" src =\"https://i.pinimg.com/originals/f5/2f/0d/f52f0d49529f7111c4539d46a79856e4.gif\" alt=\"\"/>"; break;
     case 66: $WW="leichter gefrierender Regen"; break;
     case 67: $WW="m&auml;&szlig;iger oder starker gefrierender Regen"; break;
     case 68: $WW="leichter Schneeregen"; break;
     case 69: $WW="m&auml;&szlig;iger oder starker Schneeregen"; break;
     case 70: $WW="unterbrochener leichter Schneefall/</br>einzelne Schneeflocken"; break;
-    case 71: $WW="durchgehend leichter Schneefall"; break;
+    case 71: $WW="durchgehend leichter Schneefall</br><img width=\"40%\" height=\"40%\" src =\"https://www.online-image-editor.com/help/images/floatie_2b.gif\" alt=\"durchgehend leichter Schneefall\"/>"; break;
     case 72: $WW="unterbrochener m&auml;&szlig;iger Schneefall"; break;
-    case 73: $WW="durchgehend m&auml;&szlig;iger Schneefall"; break;
+    case 73: $WW="durchgehend m&auml;&szlig;iger Schneefall</br><img width=\"40%\" height=\"40%\" src =\"https://www.online-image-editor.com/help/images/floatie_2b.gif\" alt=\"\"/>"; break;
     case 74: $WW="unterbrochener starker Schneefall"; break;
-    case 75: $WW="durchgehend starker Schneefall"; break;
+    case 75: $WW="durchgehend starker Schneefall</br><img width=\"80%\" height=\"80%\" src =\"https://i1.wp.com/sciencefiles.org/wp-content/uploads/2019/10/Avalanche.gif?resize=337%2C189&ssl=1\" alt=\"\"/>"; break;
     case 76: $WW="Eisnadeln (Polarschnee)"; break;
     case 77: $WW="Schneegriesel"; break;
     case 78: $WW="vereinzelte Schneeflocken (Schneesterne)"; break;
@@ -1405,15 +1429,15 @@ function ww2words ($ww){
     case 88: $WW="m&auml;&szlig;iger/starker Graupelschauer"; break;
     case 89: $WW="leichter Hagelschauer"; break;
     case 90: $WW="m&auml;&szlig;iger/starker Hagelschauer"; break;
-    case 91: $WW="nach Gewitter,</br>zurzeit leichter Regen oder -schauer"; break;
+    case 91: $WW="nach Gewitter,</br>zurzeit leichter Regen oder -schauer</br><img width=\"60%\" height=\"60%\" src =\"https://img1.dreamies.de/img/117/b/6evpgddtotg.gif\" alt=\"\"/>"; break;
     case 92: $WW="nach Gewitter,</br>zurzeit m&auml;&szlig;iger/starker Regen oder -schauer"; break;
     case 93: $WW="nach Gewitter,</br>zurzeit leichter Schneefall/Schneeregen/Graupel/Hagel"; break;
     case 94: $WW="nach Gewitter,</br>zurzeit m&auml;&szlig;iger/starker Schneefall/Schneeregen/Graupel/Hagel"; break;
-    case 95: $WW="leichtes/m&auml;&szlig;iges Gewitter</br>mit Regen/Schnee"; break;
+    case 95: $WW="leichtes/m&auml;&szlig;iges Gewitter</br>mit Regen/Schnee</br><img width=\"60%\" height=\"60%\" src =\"https://img1.dreamies.de/img/117/b/6evpgddtotg.gif\" alt=\"\"/>"; break;
     case 96: $WW="leichtes/m&auml;&szlig;iges Gewitter</br>mit Graupel/Hagel"; break;
-    case 97: $WW="starkes Gewitter</br>mit Regen/Schnee"; break;
+    case 97: $WW="starkes Gewitter</br>mit Regen/Schnee</br><img width=\"60%\" height=\"60%\" src =\"https://www.animierte-gifs.net/data/media/42/animiertes-gewitter-bild-0057.gif\" alt=\"\"/>"; break;
     case 98: $WW="starkes Gewitter</br>mit Sandsturm"; break;
-    case 99: $WW="starkes Gewitter</br>mit Graupel/Hagel"; break;
+    case 99: $WW="starkes Gewitter</br>mit Graupel/Hagel</br><img width=\"60%\" height=\"60%\" src =\"https://www.animierte-gifs.net/data/media/42/animiertes-gewitter-bild-0057.gif\" alt=\"\"/>"; break;
   }
   return $WW;
 }
@@ -1483,7 +1507,7 @@ function gattung ($c,$Cl,$Cm,$Ch,$ww){
         }
         break;
     case 5:
-        if (($ww[0] == 6) or ($ww[0] == 7) or ($ww[0] == 2) or ($ww == 58)or ($ww == 59)) {
+        if (($ww[0] == 6) or ($ww[0] == 7) or ($ww[0] == 2) or ($ww[0] == 5)) {
           $C="Ns pra ";
         }elseif ($ww == 14 or $ww == 15 or $ww == 16) {
           $C="Ns vir ";
@@ -1892,7 +1916,7 @@ function synop ($fname,$hour,$day,$day_1){
   $ir2 = intval($global[1][0]); #rain groups
   $ix2 = intval($global[1][1]); #typ of station
   if ($ix2 == 6){
-    throw new Exception("</br></br><a class=\"n\" href=\"https://www.youtube.com/watch?v=Em5m0nvRfek\">Automatenmeldung wurde verschickt!</a></br></br> Bitte Automatenmeldung löschen und FM12 mit CCA rausschicken!</br>" . $ix2);
+    throw new Exception("</br></br><a class=\"n\" href=\"https://www.youtube.com/watch?v=Em5m0nvRfek\">Automatenmeldung wurde verschickt!</a></br></br> Bitte Automatenmeldung l&ouml;schen und FM12 mit CCA rausschicken!</br>" . $ix2);
   }
   $h=$global[1][2];            #height of lowest cloud layer
   $vv=substr($global[1], -2);  #visibility
@@ -2106,7 +2130,7 @@ function synop ($fname,$hour,$day,$day_1){
   if ($global[7][0] == '5') {
     if ($global[7][1] == "/") {
       echo($global[7][0] . "<b style=\"color:red;\">" . $global[7][1] . "</b>" . substr($global[7], -3) . " ");
-      $error_message .= "Tendenz fehlt.</br>";
+      $error_message .= "Drucktendenz fehlt.</br>";
     } else {
       echo ($global[7] . " ");
     }
