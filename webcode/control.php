@@ -1837,7 +1837,7 @@ function ground2words($E,$E_strich,$SSS){
           break;
     }
   }
-    if (($E_strich != -9) and ($E_strich != "/")){
+  if (($E_strich != -9) and ($E_strich != "/")){
     switch ($E_strich) {
       case 0:
           $ground.="Boden mit Hagel/Graupel mehr als 50% bedeckt!!";
@@ -1867,13 +1867,17 @@ function ground2words($E,$E_strich,$SSS){
           $ground.="Schneedecke: locker/trocken, ungleichm&auml;&szlig;ig " . $SSS ."cm</br>";
           break;
       case 9:
-          $ground.="geschlosssene Schneedecke mit hohen Verwehungen " . $SSS ."cm</br>";
+          $ground.="<a class=\"n\" href=\"https://www.wetteronline.de/?ireq=true&pid=p_wotexte_multimedia&src=wotexte/vermarktung/snippets/gallery/1978/12/31/image_19781231_sk_640x426_eb99945c9da33ff489dd8ab98c003c28.jpg\">geschlosssene Schneedecke mit hohen Verwehungen " . $SSS ."cm</a></br>";
           break;
+          
     }
   }
   if (($SSS == 998) and ($E_strich == "/")){
     $ground.="Schneedecke: Reste</br>";
-  }    
+  }
+  if (($E_strich != -9) and ($E_strich != "/") and ($SSS == 998)){
+    $ground = "Schneedecke: <a class=\"n\" href=\"https://asienspiegel.ch/2019/03/die-riesige-schneewand-von-tateyama-im-japanischen-fruehling\">998</a></br>";
+  }
   return $ground;
 }
 
@@ -2187,9 +2191,13 @@ function synop ($fname,$hour,$day,$day_1){
         if (($E ==-9 or $E =="/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9) or ($E_strich == "/"))){
           echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Erdbodenzustand fehlt.</br>";
-        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){
-          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $sec333[$iter_333][1] . "</b>" . substr($sec333[$iter_333], -3) . " ");
-          $error_message .= "Bei einer Decke aus Schnee/Graupel/Hagel &uuml;ber 50%</br>muss der Erdbodenzustand E verXt werden!</br>";
+        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){ #case E und E' gemeldet, aber unter E' über 50% snowcover 
+          if ($SSS == "998"){ #zusätzlich noch 998 (Reste) gemeldet, also komplett alles durch einanader.
+            echo($sec333[$iter_333] . " ");
+          }else{
+            echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $sec333[$iter_333][1] . "</b>" . substr($sec333[$iter_333], -3) . " ");
+            $error_message .= "Bei einer Decke aus Schnee/Graupel/Hagel &uuml;ber 50%</br>muss der Erdbodenzustand E verXt werden!</br>";
+          }
         } elseif (($E == 4 or $E == 5) and ($T > 10)){
           echo($sec333[$iter_333][0] . "<b style=\"color:orange;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Tippfehler beim Erdbodenzustand?</br>";
@@ -2207,8 +2215,14 @@ function synop ($fname,$hour,$day,$day_1){
       } elseif ( ($sec333[$iter_333][0] == "4") and (($hour % 6) == 0) ){
         if (($E == "/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9))){
           echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$iter_333], -3) . " ");
-        }elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){
-          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$iter_333], -3) . " ");
+        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){ #case E und E' gemeldet, aber unter E' über 50% snowcover
+          if ($SSS == "998"){ #zusätzlich noch 998 (Reste) gemeldet, also komplett alles durch einanader.
+            echo("<b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
+            $error_message .= "E' passt nicht zu E und Schneeh&ouml;he <a href=\"fm12.html#34\">sss</a>=998!</br><a href=\"fm12.html#34\">sss</a>=998 bedeutet Reste oder Flecken,</br>aber unter E' wurde eine Schneedecke &uuml;ber 50% Bedeckung gemeldet.</br>Wahrscheinlich soll E'=1 oder E'=/ sein.";
+          }else{
+            echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$iter_333], -3) . " ");
+          }
+
           if ($SSS >= 100 and $SSS < 997){
             $error_message .= "Tippfehler bei der Schneeh&ouml;he.</br>";
           }
