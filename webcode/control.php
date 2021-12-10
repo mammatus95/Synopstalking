@@ -894,8 +894,10 @@ function getww($fname){
   $zitate = file_get_contents($fname);
   $parts = explode("\n", $zitate);
   $global = explode(" ", $parts[3]);
+  $W1=$W2=$ww=$vv=0; # current weather
+  
+  $vv=substr($global[1], -2);  #visibility
 
-  $W1=$W2=$ww=0; # current weather
   $x=6;
   while($x <= count($global)) {
     if ($global[$x][0] == "7") {
@@ -905,7 +907,7 @@ function getww($fname){
     }
     $x++;
   }
-  return array($ww,$W1,$W2);
+  return array($ww,$W1,$W2,$vv);
 }
 
 
@@ -942,6 +944,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   if ( (($vv <= 57) or ($vv==90)) and ($ww <= 4) ){
     $fww="<b class=\"alert\">" . $ww . "</b>";
   }
+  
   if (($vv <= 57) and ($ww <= 4)){
     $fww="<b class=\"alert\">" . $ww . "</b>";
     if ($relh >= 80){
@@ -982,6 +985,11 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     $fww="<b class=\"warn\">" . $ww . "</b>";
     $error_message .= "Relative Feuchte unter 80%.</br>";
   }
+  
+  if ( ($ww < 30) and ($ww != "04") and ($ww != "05") and ($ww != "06") and ($vv < 10) ){
+    $fww="<b class=\"alert\">" . $ww . "</b>";
+  }
+  
   if ( (($ww == 40) and ($vv < 10)) or ($ww==41) or (($ww == 40) and (($W1 == 4) and ($W2 == 4))) ){
     $fww="<b class=\"alert\">" . $ww . "</b>";
     $error_message .= "ww 40/41 falsch verschl&uuml;sselt.</br>";
@@ -1034,9 +1042,9 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   #}
 
   if ( ($hour ==  "03") or ($hour  ==  "09") or ($hour  ==  "15") or ($hour  == "21")){
-    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
-    list ($ww_2, $W1_2, $W2_2) = getww(sprintf("obs_".$day."%02s.txt", $hour-2));
-    list ($ww_3, $W1_3, $W2_3) = getww(sprintf("obs_".$day."%02s.txt", $hour-3));
+    list ($ww_1, $W1_1, $W2_1, $vv_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
+    list ($ww_2, $W1_2, $W2_2, $vv_2) = getww(sprintf("obs_".$day."%02s.txt", $hour-2));
+    list ($ww_3, $W1_3, $W2_3, $vv_3) = getww(sprintf("obs_".$day."%02s.txt", $hour-3));
     if ( ( (ww2W($ww_1) >= 3) or (ww2W($ww_2) >= 3) or (ww2W($ww_3) >= 3 and $ww_3[0] != 2) ) and ($W1 <= 2) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -1084,6 +1092,20 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Nachwetter muss 21,</br>da in der letzten Stunde Regen.</br>";
     }
+    
+    $change_vv=$vv-$vv_1; #positiv wenn nebel abnimmt
+    if (($change_vv == 0) and ($vv < 10) and ($ww != 44 and $ww != 45) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite ist gleich geblieben, aber \"Nebel, unver&auml;ndert\" wurde nicht gemeldet.</br>";
+    }
+    if (($change_vv > 0) and ($vv < 10) and ($ww != 42 and $ww != 43) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite hat zugenommen, aber \"Nebel, d&uuml;nner werdend\" wurde nicht gemeldet.</br>";
+    }
+    if (($change_vv < 0) and ($vv < 10) and ($ww != 46 and $ww != 47) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite hat abgenommen, aber \"Nebel, dichter werdend\" wurde nicht gemeldet.</br>";
+    }
 
     #if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and ($W1 > 2) and (($W1 != $W1_1 and $W1_1 > 2) or ($W1 != $W1_2 and $W1_2 > 2) or ($W1 != $W2_1 and $W2_1 > 2) or ($W1 != $W2_2 and $W2_2 > 2 ) or ($ww_2[0] != $ww[0] and $ww_2[0] > 4) or ($ww_1[0] != $ww[0] and $ww_1[0] > 4) or ($ww_3[0] != $ww[0] and $ww_3[0] > 4) ) ){
     #  $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -1104,12 +1126,12 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $dday = $day;
       $hhour = $hour;
     }
-    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-1));
-    list ($ww_2, $W1_2, $W2_2) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-2));
-    list ($ww_3, $W1_3, $W2_3) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-3));
-    list ($ww_4, $W1_4, $W2_4) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-4));
-    list ($ww_5, $W1_5, $W2_5) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-5));
-    list ($ww_6, $W1_6, $W2_6) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-6));
+    list ($ww_1, $W1_1, $W2_1, $vv_1) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-1));
+    list ($ww_2, $W1_2, $W2_2, $vv_2) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-2));
+    list ($ww_3, $W1_3, $W2_3, $vv_3) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-3));
+    list ($ww_4, $W1_4, $W2_4, $vv_4) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-4));
+    list ($ww_5, $W1_5, $W2_5, $vv_5) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-5));
+    list ($ww_6, $W1_6, $W2_6, $vv_6) = getww(sprintf("obs_".$dday."%02s.txt", $hhour-6));
     if ( (($W1 == $W2) and ($W1 > 2)) and (($ww_1 < 30) or ($ww_2 < 30) or ($ww_3 < 30) or ($ww_4 < 30) or ($ww_5 < 30) or ($ww_6 < 30) or ($W2_1 < 3) or ($W2_2 < 3) or ($W2_3 < 3) or ($W2_4 < 3) or ($W2_5 < 3) ) ){
       $fW1="<b class=\"warn\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -1159,6 +1181,20 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
       $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> Höhere Schl&uuml;sselziffer zuerst!</br>";
     }
+    
+    $change_vv=$vv-$vv_1; #positiv wenn nebel abnimmt
+    if (($change_vv == 0) and ($vv < 10) and ($ww != 44 and $ww != 45) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite ist gleich geblieben, aber \"Nebel, unver&auml;ndert\" wurde nicht gemeldet.</br>";
+    }
+    if (($change_vv > 0) and ($vv < 10) and ($ww != 42 and $ww != 43) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite hat zugenommen, aber \"Nebel, d&uuml;nner werdend\" wurde nicht gemeldet.</br>";
+    }
+    if (($change_vv < 0) and ($vv < 10) and ($ww != 46 and $ww != 47) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite hat abgenommen, aber \"Nebel, dichter werdend\" wurde nicht gemeldet.</br>";
+    }
 
 #    if  (($W2 == 2 or $W2 == 1 or $W2 == 0) and ($W1 > 2) and (($W1 != $W1_1 and $W1_1 > 2) or ($W1 != $W1_2 and $W1_2 > 2) or ($W1 != $W2_1 and $W2_1 > 2) or ($W1 != $W2_2 and $W2_2 > 2 ) or ($ww_2[0] != $ww[0] and $ww_2[0] > 4) or ($ww_1[0] != $ww[0] and $ww_1[0] > 4) or ($ww_3[0] != $ww[0] and $ww_3[0] > 4) or ($ww_4[0] != $ww[0] and $ww_4[0] > 4) or ($ww_5[0] != $ww[0] and $ww_5[0] > 4) or ($ww_6[0] != $ww[0] and $ww_6[0] > 4) ) ){
 #      $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -1166,7 +1202,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
 #    }
 
   }else{
-    list ($ww_1, $W1_1, $W2_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
+    list ($ww_1, $W1_1, $W2_1, $vv_1) = getww(sprintf("obs_".$day."%02s.txt", $hour-1));
     if ( (($W1 == $W2) and ($W1 > 2)) and ($ww_1 < 30) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
@@ -1187,6 +1223,21 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $fW2="<b class=\"warn\">" . $W2 . "</b>";
       $error_message .= "W<sub><code>1</code></sub> gemeldet, aber kein ww.</br>";
     }
+
+    $change_vv=$vv-$vv_1; #positiv wenn nebel abnimmt
+    if (($change_vv == 0) and ($vv < 10) and ($ww != 44 and $ww != 45) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite ist gleich geblieben, aber \"Nebel, unver&auml;ndert\" wurde nicht gemeldet.</br>";
+    }
+    if (($change_vv > 0) and ($vv < 10) and ($ww != 42 and $ww != 43) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite hat zugenommen, aber \"Nebel, d&uuml;nner werdend\" wurde nicht gemeldet.</br>";
+    }
+    if (($change_vv < 0) and ($vv < 10) and ($ww != 46 and $ww != 47) and ($ww[0]==4)){
+      $fww="<b class=\"alert\">" . $ww . "</b>";
+      $error_message .= "Sichtweite hat abgenommen, aber \"Nebel, dichter werdend\" wurde nicht gemeldet.</br>";
+    }
+    
   }
 
   if ($W1 < $W2){
