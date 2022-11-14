@@ -693,6 +693,11 @@ function test_N($ww,$h,$N,$vv,$Nh,$hh1,$ix,$in,$N1,$N2,$N3,$N4,$error_message) {
     $error_message .= "Sicht nicht <8 km.</br>";
   }
   
+  if (($ww[0] == 4) and ($vv >= 10 and $vv != 90) and $ww > 41){
+    $fvv="<b class=\"alert\">" . $vv . "</b>";
+    $error_message .= "Nebel gegeben, Sicht aber</br> gr&ouml&szlig;er gleich 1 km!</br>";
+  }
+  
   if ( ($ix != 1) and ($vv < 58) ){
     $fvv="<b class=\"alert\">" . $vv . "</b>";
     $error_message .= "Sichtweite &uuml;berpr&uuml;fen! Trat Nebel oder Dunst auf?</br>Falls ja, 7er Gruppe hinzuf&uuml;gen und <a href=\"fm12.html#iihVV\">ix</a> anpassen.</br>";
@@ -958,6 +963,11 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     $error_message .= "Relative Feuchte unter 80% oder Sichtweite größer 8km!</br>";
   }
 
+  if (($ww[0] == 4) and ($vv >= 10 and $vv != 90) and $ww > 41){
+    $fww="<b class=\"alert\">" . $ww . "</b>";
+    #$error_message .= "Nebel gegeben, Sicht aber</br> gr&ouml&szlig;er gleich 1 km!</br>";
+  }
+
   #drizzel
   if ( ($relh < 80) and (($ww >= 50) and ($ww <= 57)) ){
     $fww="<b class=\"warn\">" . $ww . "</b>";
@@ -1206,6 +1216,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     if ( (($W1 == $W2) and ($W1 > 2)) and ($ww_1 < 30) ){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
+      $error_message .= "Nebentermin: W<sub>1</sub> = W<sub>2</sub>,</br>aber kein ww zum Vortermin gegeben.</br>";
     }
     if (($ww_1 > 30) and ($ww < 17)){
       $fww="<b class=\"alert\">" . $ww . "</b>";
@@ -1330,6 +1341,18 @@ function rr1h($rr,$h,$d) {
   }
   return $RR;
   
+}
+
+function bedeckung_func ($N){
+  $n="-99";
+  if ($N == 0){
+    $n="&iquest;Wo sind die Wolken hin?";
+  }elseif ($N == 9){
+    $n="kann nix sehen<img width=\"8%\" height=\"8%\" src =\"https://images.emojiterra.com/twitter/v13.1/512px/1f648.png\" alt=\"\"/>";
+  }else{
+    $n = $N."/8";
+  }
+  return $n;
 }
 
 function visibility ($vv){
@@ -2128,8 +2151,8 @@ function synop ($fname,$hour,$day,$day_1){
     }
     $x++;
   }
- 
-  $value.="Wetter: ".ww2words ($ww)."</br>Sicht: ". visibility ($vv) ."</br>Bedeckung: ".$N."/8</br>Tiefste Wolke: ".height ($h)."</br>";
+  
+  $value.="Wetter: ".ww2words ($ww)."</br>Sicht: ". visibility ($vv) ."</br>Bedeckung: " . bedeckung_func($N) . "</br>Tiefste Wolke: ".height ($h)."</br>";
   #if ($Cl != "0" and $Cl != "9" and $Cl != "/"){
   #  $value.="Taupunkts/Magnusfo.(nur Strahlungswetter):".number_format($lclh, 0, '.', '')."m</br>";
   #}
@@ -2221,10 +2244,31 @@ function synop ($fname,$hour,$day,$day_1){
   $E=-9;
   $E_strich=-9;
   $SSS=-999;
+  $Emin=-99; #ganze grad Celsius
+  $E5cm=-999; #5cm temp
+  $E2cm=-999; #erd 5cm temp
   while($x <= count($sec333)) {
     if ($sec333[$x][0] != "8") {
       if( ($sec333[$x][0] == "3") and (($hour % 6) == 0) ){
         $E=$sec333[$x][1];
+        if ($sec333[$x][2] == "1"){
+          $Emin= intval("-" . substr($sec333[$x], -2,2));
+        } else {
+          $Emin=intval(substr($sec333[$x], -2,2));
+        }
+        #$error_message .= str($Emin);
+        $sec666 = explode(" ", $parts[6]);
+        if ($sec666[7][1] == "1"){
+          $E2cm= floatval("-" . substr($sec666[7], -3,2) . "." . substr($sec666[7], -1,1));
+        } else {
+          $E2cm= floatval(substr($sec666[7], -3,2) . "." . substr($sec666[7], -1,1));
+        }
+        $sec555 = explode(" ", $parts[5]);
+        if ($sec555[3][1] == "1"){
+          $E5cm= floatval("-" . substr($sec555[3], -3,2) . "." . substr($sec555[3], -1,1));
+        } else {
+          $E5cm= floatval(substr($sec555[3], -3,2) . "." . substr($sec555[3], -1,1));
+        }
       } elseif ( ($sec333[$x][0] == "4") and (($hour % 6) == 0) ){
         $E_strich=$sec333[$x][1];
         $SSS=substr($sec333[$x], -3,3);
@@ -2250,8 +2294,42 @@ function synop ($fname,$hour,$day,$day_1){
             $error_message .= "Bei einer Decke aus Schnee/Graupel/Hagel &uuml;ber 50%</br>muss der Erdbodenzustand E verXt werden!</br>";
           }
         } elseif (($E == 4 or $E == 5) and ($T > 10)){
-          echo($sec333[$iter_333][0] . "<b style=\"color:orange;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
+          echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Tippfehler beim Erdbodenzustand?</br>";
+        } elseif ($E == 4 and (($E2cm > 0) or ($Emin > 0)) ){
+          #if ($E2cm > 0 and ($Emin <= 0)){
+          #  echo($sec333[$iter_333][0] . "<b style=\"color:orange;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
+          #  $error_message .= "Boden m&ouml;glicherweise nicht mehr gefroren.</br>Erdbodentemperatur(5cm) = ".$E2cm."&#176;C ist gr&ouml;&szlig;er null.</br>";
+          #} else
+          if ($E2cm < 0 and ($Emin > 0)){
+            echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b><b style=\"color:orange;\">" . substr($sec333[$iter_333], -3) . "</b> ");
+            $error_message .= "Boden m&ouml;glicherweise nicht gefroren.</br>T<sub>g</sub> minimum(12h,5cm) = ".$Emin."&#176;C ist gr&ouml;&szlig;er null. </br>";
+          } elseif (($E2cm > 0) and ($Emin > 0)){
+            echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b><b style=\"color:orange;\">" . substr($sec333[$iter_333], -3) . "</b> ");
+            $error_message .= "Boden nicht gefroren. T<sub>g</sub> minimum(12h,5cm) = ".$Emin."&#176;C</br>und Erdbodentemperatur(5cm) = ".$E2cm."&#176;C sind gr&ouml;&szlig;er null.</br>";
+          } else {
+            echo($sec333[$iter_333] . " ");
+            #$error_message .= $Emin."</br>".$E2cm;
+          }
+        } elseif (($E != 4 and $E != 5 and $E != 9) and (($E2cm < 0) or ($E5cm < 0))  ){
+            if (($E2cm < 0) and ($E5cm < 0)){
+                $error_message .= "Boden gefroren.</br>T<sub>g</sub>(5cm) = ".$E5cm."&#176;C und Erdbodentemperatur(5cm) = ".$E2cm."&#176;C ist kleiner null!</br>";
+            } elseif ($E5cm < 0){
+                $error_message .= "Boden wahrscheinlich gefroren.</br>T<sub>g</sub>(5cm) = ".$E5cm."&#176;C ist kleiner null.</br>Erdbodentemperatur(5cm) = ".$E2cm."&#176;C.</br>";
+            } elseif ($E2cm < 0){
+                $error_message .= "Boden wahrscheinlich gefroren.</br>Erdbodentemperatur(5cm) = ".$E2cm."&#176;C ist kleiner null.</br>T<sub>g</sub>(5cm) = ".$E5cm."&#176;C</br>";
+            } else {
+                $error_message .= "Fehler Kontrolltool. Line:2320</br>";
+            }
+            if ($E2cm < -0.5){
+              echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b><b style=\"color:orange;\">" . substr($sec333[$iter_333], -3) . "</b> ");
+            } elseif ($E5cm < -0.5 and $Emin < -1){
+              echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b><b style=\"color:orange;\">" . substr($sec333[$iter_333], -3) . "</b> ");
+            } elseif (($E2cm < 0) and ($E5cm < 0)){
+              echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b><b style=\"color:orange;\">" . substr($sec333[$iter_333], -3) . "</b> ");
+            } else {
+              echo($sec333[$iter_333][0] . "<b style=\"color:orange;\">" . $E . "</b><b style=\"color:orange;\">" . substr($sec333[$iter_333], -3) . "</b> ");
+            }
         } else {
           echo($sec333[$iter_333] . " ");
         }    
