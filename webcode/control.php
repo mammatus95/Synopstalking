@@ -2316,7 +2316,7 @@ function synop ($fname,$hour,$day,$day_1){
             echo($sec333[$iter_333] . " ");
             #$error_message .= $Emin."</br>".$E2cm;
           }
-        } elseif (($E != 4 and $E != 5 and $E != 9) and (($E2cm < 0) or ($E5cm < 0))  ){
+        } elseif (($E != 4 and $E != 5 and $E != 9 and $E != "/") and (($E2cm < 0) or ($E5cm < 0))  ){
             if (($E2cm < 0) and ($E5cm < 0)){
                 $error_message .= "Boden gefroren.</br>T<sub>g</sub>(5cm) = ".$E5cm."&#176;C und Erdbodentemperatur(5cm) = ".$E2cm."&#176;C ist kleiner null!</br>";
             } elseif ($E5cm < 0){
