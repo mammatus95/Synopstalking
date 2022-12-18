@@ -990,6 +990,11 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     $fww="<b class=\"warn\">" . $ww . "</b>";
     $error_message .= "Zu warm f&uuml;r Nebelfrostablagerungen.</br>";
   }
+  
+  if ( (($ww >= 43) and ($ww <= 47)) and ($T < -0.1) ){
+    $fww="<b class=\"warn\">" . $ww . "</b>";
+    $error_message .= "Nebelfrostablagerungen vergessen.</br>Entsprechendes <a href=\"fm12.html#525\">w<sub><code>z</code></sub>w<sub><code>z</code></sub></a> melden.</br>";
+  }
 
   if (($ww[0] == 4 and $ww > 41) and ($relh < 80)){
     $fww="<b class=\"warn\">" . $ww . "</b>";
