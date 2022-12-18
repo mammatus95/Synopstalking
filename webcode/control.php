@@ -1098,7 +1098,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
       $error_message .= "Umfangreich vor durchg&auml;ngig</br>";
     }
-    if (($ww_1 > 30) and ($ww < 17)){
+    if (($ww_1 > 30) and ($ww < 17) and ($ww != 40)){
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Nachwetter fehlt.</br>";
     }
@@ -1181,7 +1181,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $fW2="<b class=\"warn\">" . $W2 . "</b>";
       $error_message .= "Wetter vor der letzten</br>Stunde -> W<sub><code>1</code></sub>/W<sub><code>2</code></sub> > 2.</br>W wurde vergessen!</br>";
     }
-    if (($ww_1 > 30) and ($ww < 17)){
+    if (($ww_1 > 30) and ($ww < 17) and ($ww != 40)){
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Nachwetter fehlt.</br>";
     }
@@ -1223,7 +1223,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
       $error_message .= "Nebentermin: W<sub>1</sub> = W<sub>2</sub>,</br>aber kein ww zum Vortermin gegeben.</br>";
     }
-    if (($ww_1 > 30) and ($ww < 17)){
+    if (($ww_1 > 30) and ($ww < 17) and ($ww != 40)){
       $fww="<b class=\"alert\">" . $ww . "</b>";
       $error_message .= "Nachwetter fehlt.</br>";
     }
