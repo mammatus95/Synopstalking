@@ -11,14 +11,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.11
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.11'
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
     - name: Install codespell
       run: |
         ls
         pip3 install codespell
           
-    - name: Run codespell
+    - name: Run codespell for synops.php
       run: |
-        codespell --check-filenames --ignore-words-list="TODO" webcode/control.php
+        codespell --check-filenames --ignore-words-list="TODO" webcode/synops.php
