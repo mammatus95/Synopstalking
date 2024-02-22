@@ -3,19 +3,23 @@ name: Spellcheck PHP files
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   spellcheck:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
       - name: Install codespell
         run: |
-          sudo apt-get update && sudo apt-get install -y python3-pip
+          ls
           pip3 install codespell
           
       - name: Run codespell
-        run: codespell --check-filenames --ignore-words-list="TODO" example.php
+        run: |
+          codespell --check-filenames --ignore-words-list="TODO" webcode/control.php
