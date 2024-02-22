@@ -1,0 +1,21 @@
+name: Spellcheck PHP files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Install codespell
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          pip3 install codespell
+          
+      - name: Run codespell
+        run: codespell --check-filenames --ignore-words-list="TODO" example.php

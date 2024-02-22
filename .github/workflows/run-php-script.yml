@@ -1,0 +1,19 @@
+name: PHP Script Execution
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  run-php-script:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # You can add additional steps here if necessary, such as setting up PHP environment
+
+    - name: Execute PHP script
+      run: php your_script.php
