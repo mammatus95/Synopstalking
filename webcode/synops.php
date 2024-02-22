@@ -29,7 +29,7 @@
           echo("\n  <tr class=\"sn\" >\n    <td>\n     <b>Hour:  ". $x . " UTC</b></br>");
         }
         try {
-          synop(sprintf("../examplereports/obs_07%02s.txt", $x),$x,$day,$day_1);
+          synop(sprintf("examplereports/obs_07%02s.txt", $x),$x,$day,$day_1);
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
             echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 has been submitted too late!</b>";
