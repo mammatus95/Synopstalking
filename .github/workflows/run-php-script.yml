@@ -16,4 +16,4 @@ jobs:
     # You can add additional steps here if necessary, such as setting up PHP environment
 
     - name: Execute PHP script
-      run: php your_script.php
+      run: php webcode/synops.php
