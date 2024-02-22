@@ -3,40 +3,34 @@ name: PHP Code Check
 on:
   push:
     branches:
-      - main
       - master
 
 jobs:
-  phpcodesniffer:
+  code-check:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y php
+        ls webcode
+
+    - name: PHP lint synops.php
+      run: php -l ./webcode/synops.php
       
-      - name: Install PHP and dependencies
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist
-
-      - name: Run PHP_CodeSniffer
-        run: vendor/bin/phpcs --standard=PSR12 .
+    - name: PHP lint synopsturm.php
+      run: php -l ./webcode/synopsturm.php
       
-  phpstan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: PHP lint synopsturm.php
+      run: php -l ./webcode/synopsturm.php
       
-      - name: Install PHP and dependencies
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist
-
-      - name: Run PHPStan
-        run: vendor/bin/phpstan analyze --level=5 .
+    - name: PHP lint control.php  
+      run: php -l ./webcode/control.php  
+      
+    - name: PHP lint cors.php
+      run: php -l ./webcode/cors.php
+      

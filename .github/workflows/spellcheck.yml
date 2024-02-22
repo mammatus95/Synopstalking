@@ -16,9 +16,12 @@ jobs:
         python-version: '3.11'
     - name: Install codespell
       run: |
-        ls webcode
         pip3 install codespell
           
     - name: Run codespell for synops.php
       run: |
         codespell --check-filenames --ignore-words-list="TODO" webcode/synops.php
+        
+    - name: Run codespell for synopsturm.php
+      run: |
+        codespell --check-filenames --ignore-words-list="TODO" webcode/synopsturm.php

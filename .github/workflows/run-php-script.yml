@@ -2,7 +2,8 @@ name: PHP Script Execution
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
   run-php-script:
