@@ -19,8 +19,7 @@
     <embed src="audio/test_audio.wav" autostart="false" width="0" height="0" id="sound1" enablejavascript="true">
   </head>	
   <body>
-    <!--http://www.met.fu-berlin.de/de/wetter/service/obs_10381/-->
-    
+   
     <?php
       date_default_timezone_set('UTC');
       include 'control.php';
@@ -192,6 +191,7 @@
           } else {
             echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
             echo "<b>If you don't know why this happened, send a message to quali@met.fu-berln.de.</b></br></br>\n";
+            echo "<b>Report program errors to https://github.com/mammatus95/Synopstalking/issues</b></br></br>\n";
           }
         }
         echo("\n    </td>\n    <td>\n    ". $value ."\n    </td>\n    <td>\n    ". $error_message ."\n    </td>\n  </tr>\n");

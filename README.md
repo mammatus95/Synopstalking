@@ -1,23 +1,27 @@
 # Synopstalking
 
-PHP script to print and check the weather reports of 10381
+PHP script to print and check the weather reports of 10381 on a browser
 
-## Output Version
-### Sysnops of the last two days
-https://userpage.fu-berlin.de/mammatus95/turm/fm12/synops.php
-### Sysnops of the last two days with error messages
-https://userpage.fu-berlin.de/mammatus95/turm/fm12/synopsturm.php
-### Sysnops of the last ten days
-https://userpage.fu-berlin.de/mammatus95/turm/fm12/quali.php
-
-## Datasource
-http://www.met.fu-berlin.de/de/wetter/service/obs_10381/
+## How does it works
+![Example](bilder/test.png)
 
 ### How the error message work
 
 To mark erros two colours are in use.
 * Red for cases in which the programmer is sure that there is something wrong (safe error).
 * Orange for cases in which it isn’t a "safe error" or to mark dependency to a safe error.
+
+## Datasource
+http://www.met.fu-berlin.de/de/wetter/service/obs_10381/
+
+## Output Version
+### Sysnops of the last two days
+http://sted15.userpage.fu-berlin.de/turm/fm12/synops.php
+### Sysnops of the last two days with error messages
+http://sted15.userpage.fu-berlin.de/turm/fm12/synopsturm.php
+### Sysnops of the last ten days
+http://sted15.userpage.fu-berlin.de/turm/fm12/quali.php
+
 
 
 ### How you can run this project by you own

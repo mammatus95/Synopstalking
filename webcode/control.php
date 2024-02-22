@@ -259,7 +259,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
     $error_message .= $N1."/8 " . $C1 . " > N<sub><code>h</code></sub>(".$Nh.") </br>";
   }
-  if (($Nh < $N1) and ($C == 6 or $C == 7 or $C == 8 or $C == 9)){
+  if (($Nh < $N1) and ($C1 == 6 or $C1 == 7 or $C1 == 8 or $C1 == 9)){
     $fN1 = "<b class=\"alert\">" . $N1 . "</b>";
     $error_message .= $N1."/8 in der 1. 8er Gruppe</br>ist gr&ouml;&szlig;er als Nh=".$Nh."/8 </br>";
   }
@@ -1301,7 +1301,7 @@ function rr1h($rr,$h,$d) {
   if ($rr == "999"){
     #$RR="< 0.05 mm";
     if (($h % 2)==0){ #} ("14" == $h){
-      if (($W % 2)==0){
+      if (($week % 2)==0){
         $RR="<a class=\"n\" href=\"https://grid.gograph.com/zornige-biene-zeichen-EPS-Vektor_gg66439901.jpg\">Ne Biene durch geflogen.</a>";
       } else {
         $RR="<a class=\"n\" href=\"https://image.spreadshirtmedia.net/image-server/v1/mp/compositions/T813A1MPA3803PT17X4Y92D161795900FS2655/views/1,width=550,height=550,appearanceId=1,backgroundColor=FFFFFF,noPt=true,version=1574077764/dicke-lachende-biene-auf-pollen-suche-geschenkidee-frauen-premium-t-shirt.jpg\">Ne Biene durch geflogen.</a>";
@@ -1321,7 +1321,7 @@ function rr1h($rr,$h,$d) {
     } elseif (($day % 9)==0){
       $RR="au&szlig;er langeweile, nix gewesen";
     } elseif (($day % 2)==0){
-      if (($W % 2)==0){
+      if (($week % 2)==0){
         $RR="Nullkommanix";
       } else {
         $RR="schon wieder trocken:(";
@@ -2047,8 +2047,8 @@ function synop ($fname,$hour,$day,$day_1){
   $relh = relh($ppp, $T + $ZEROCNK,  $Td + $ZEROCNK);
   $lclp = $lclt = 0;
   $mr = mixratio($ppp, $Td + $ZEROCNK);
-  list ($lclp, $lclt) = drylift($ppp, $temp + $ZEROCNK, $Td + $ZEROCNK);
-  $lclh=lclheight($temp+$ZEROCNK, $lclt,$mr*0.001);
+  list ($lclp, $lclt) = drylift($ppp, $T + $ZEROCNK, $Td + $ZEROCNK);
+  $lclh=lclheight($T+$ZEROCNK, $lclt,$mr*0.001);
   #$lclh=$lclp;
   if (count($global) == "11"){
     $ix=1;
