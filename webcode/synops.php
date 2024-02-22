@@ -20,7 +20,8 @@
       $day = date("d", $timestamp);
       $day_1 = date("d", $timestamp - 60 * 60 * 24);
       $hour = date("H", $timestamp);
-      for ($x = $hour; $x >= 0; $x--) {
+      $hour = 22;  # for debug reason
+      for ($x = $hour; $x >= 14; $x--) {
         if ( ($x ==  "03") or ($x ==  "09") or ($x ==  "15") or ($x == "21")){
           echo("\n  <tr class=\"si\" >\n    <td>\n     <b class=\"si\">Hour:  ". $x . " UTC</b></br>");
         }elseif ( ($x ==  "00") or ($x ==  "06") or ($x ==  "12") or ($x == "18")){
@@ -29,7 +30,8 @@
           echo("\n  <tr class=\"sn\" >\n    <td>\n     <b>Hour:  ". $x . " UTC</b></br>");
         }
         try {
-          $file_path = sprintf("./examplereports/obs_07%02s.txt", $x);
+          $file_path = sprintf("./webcode/examplereports/obs_07%02s.txt", $x);
+          echo "\n\n", file_exists($file_path), "  " , $file_path, "\n\n";
           if (file_exists($file_path)) {
             synop($file_path,$x,$day,$day_1);
           } else {

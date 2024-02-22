@@ -283,22 +283,22 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
   
   if (($hh1 >=51) and ($hh1 < 56)){
     $fhh1 = "<b class=\"alert\">" . $hh1 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schl&uuml;sselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   if (($hh2 >=51) and ($hh2 < 56)){
     $fhh2 = "<b class=\"alert\">" . $hh2 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schl&uuml;sselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   if (($hh3 >=51) and ($hh3 < 56)){
     $fhh3 = "<b class=\"alert\">" . $hh3 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schl&uuml;sselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   if (($hh4 >=51) and ($hh4 < 56)){
     $fhh4 = "<b class=\"alert\">" . $hh4 . "</b>";
-    $error_message .= "Schlüsselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
+    $error_message .= "Schl&uuml;sselziffern 51 bis 55 sind keine</br> H&ouml;hen zu geordnet. hh muss 50!</br>";
   }
 
   #heights
@@ -473,7 +473,7 @@ function test_8group($N,$Nh,$Cl,$Cm,$Ch,$N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$ww,$err
     $fCm="<b class=\"warn\">" . $Cm . "</b>";
     $error_message .= "N<sub><code>h</code></sub> > 0, aber keine tiefen oder</br>mittelhohen Wolken verschl&uuml;sset.</br>";
   }
-  # if Nh <5/8 mitel/hohe Wolken verschlüsselt werden.
+  # if Nh <5/8 mitel/hohe Wolken verschl&uuml;sselt werden.
   #if ( ($Nh < 6 and ($Cl == 0 or ($Cm == 0 and $Cm != "/"))) and ($Ch == "/") ){
   #  $fCh="<b class=\"alert\">" . $Ch . "</b>";
   #  $error_message .= " Ch muss gemeldet werden.</br>";
@@ -960,7 +960,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   }
   if ((($relh < 80) or ($vv > 57)) and ($ww == 10)){
     $fww="<b class=\"alert\">" . $ww . "</b>";
-    $error_message .= "Relative Feuchte unter 80% oder Sichtweite größer 8km!</br>";
+    $error_message .= "Relative Feuchte unter 80% oder Sichtweite gr&ouml;ßer 8km!</br>";
   }
 
   if (($ww[0] == 4) and ($vv >= 10 and $vv != 90) and $ww > 41){
@@ -1130,7 +1130,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   if ($W1 < $W2){
     $fW1="<b class=\"alert\">" . $W1 . "</b>";
     $fW2="<b class=\"alert\">" . $W2 . "</b>";
-    $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> Höhere Schl&uuml;sselziffer zuerst!</br>";
+    $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> H&ouml;here Schl&uuml;sselziffer zuerst!</br>";
   }
 
   }elseif ( ($hour ==  "00") or ($hour ==  "06") or ($hour ==  "12") or ($hour == "18")){
@@ -1194,7 +1194,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
     if ($W1 < $W2){
       $fW1="<b class=\"alert\">" . $W1 . "</b>";
       $fW2="<b class=\"alert\">" . $W2 . "</b>";
-      $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> Höhere Schl&uuml;sselziffer zuerst!</br>";
+      $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> H&ouml;here Schl&uuml;sselziffer zuerst!</br>";
     }
     
     $change_vv=$vv-$vv_1; #positiv wenn nebel abnimmt
@@ -1259,7 +1259,7 @@ function test_ww($ww,$W1,$W2,$h,$vv,$relh,$N,$T,$C1,$C2,$C3,$C4,$Cm,$hour,$day,$
   if ($W1 < $W2){
     $fW1="<b class=\"alert\">" . $W1 . "</b>";
     $fW2="<b class=\"alert\">" . $W2 . "</b>";
-    $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> Höhere Schl&uuml;sselziffer zuerst!</br>";
+    $error_message .= "W<sub><code>2</code></sub>>W<sub><code>1</code></sub> H&ouml;here Schl&uuml;sselziffer zuerst!</br>";
   }
 
   if (($W1 != $W2) and ($W1 <= 2)){ #(($W1 == 0) and ($W2 != 0) or ($W1 == 1) and ($W2 != 1) or ($W1 == 2) and ($W2 != 2)){
@@ -1706,6 +1706,8 @@ function cor_func2 ($cor){
     $cor_count=9;
   } else if ($cor == "CCJ"){
     $cor_count=10;
+  } else {
+    $cor_count=0;
   }
   return $cor_count;
 }
@@ -1774,7 +1776,8 @@ function lcltemp($t, $td){
   -------
   LCL temperature in K
   */
-  global $ZEROCNK;
+  
+  $ZEROCNK = 273.15;        // Zero Celsius in Kelvins
   $s = $t - $td;
   #$t -= $ZEROCNK;
   $dlt = $s * (1.2185 + 0.001278 * ($t-$ZEROCNK) + $s * (-0.00219 + 0.00001173 * $s - 0.0000052 * ($t-$ZEROCNK) ));
@@ -1791,7 +1794,7 @@ function theta($p, $t, $pn=1000.0){
   -------
   Potential temperature in K
   */
-  global $ZEROCNK, $ROCP;
+  $ROCP = 0.28571426;       // R over Cp
   return ($t * (($pn / $p) ** $ROCP));
 }
 
@@ -1805,11 +1808,30 @@ function thalvl($theta, $t,$pn=1000.0){
   -------
   Pressure (hPa)
   */
-  global $ROCP;
-  return $pn / (($theta / $t)**(1.0/$ROCP));
+  $ROCP = 0.28571426;       // R over Cp
+  $const_var=(1.0/$ROCP);
+  if ($t == 0){
+    return -9999;
+  }
+  $result = ($theta / $t)**$const_var;
+  if ($result == 0){
+    return -9999;
+  }
+  return $pn / $result;
+  
 }
 
 function drylift($p, $t, $td){
+  /*
+  Parameters
+  ----------
+  p  : Pressure (hPa)
+  td : Dewpoint (K)
+  t  : Temperature (K)
+  Returns
+  -------
+  lclp (hPa), lclt (K)
+  */
   $t2 = lcltemp($t, $td);
   $p2 = thalvl(theta($p, $t), $t2);
   return array ($p2, $t2);
@@ -1831,7 +1853,7 @@ function lclheight($t, $lclt, $mr){
 
 function tr_func($tr){
   /*
-    0 -- nicht aufgeführter oder vor dem Termin endender Zeitraum
+    0 -- nicht aufgef&uuml;hrter oder vor dem Termin endender Zeitraum
     1 -- 6 Stunden
     2 -- 12 Stunden
     3 -- 18 Stunden
@@ -1894,19 +1916,19 @@ function ground2words($E,$E_strich,$SSS){
           $ground="Erdbodenzustand: nass</br>";
           break;
       case 3:
-          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.moz.de/imgs/38/8/6/8/8/6/3/5/9/tok_89246d0ba0e2c1efd86804bee588f399/w1176_h662_x750_y486_bln-210721-hochwasser.JPG-ad8f6ca64a613d07.jpeg\">überflutet</a></br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.moz.de/imgs/38/8/6/8/8/6/3/5/9/tok_89246d0ba0e2c1efd86804bee588f399/w1176_h662_x750_y486_bln-210721-hochwasser.JPG-ad8f6ca64a613d07.jpeg\">&uuml;berflutet</a></br>";
           break;
       case 4:
           $ground="Erdbodenzustand: <a class=\"n\" href=\"https://image.freepik.com/fotos-kostenlos/frost-an-einem-fenster_53876-88656.jpg\">gefroren</a></br>";
           break;
       case 5:
-          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.stuttgarter-zeitung.de/media.media.1e3b768d-1b12-4ec8-9a9a-81acd577f20f.original1024.jpg\">Glatteis oder Eisglätte</a></br>";
+          $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.stuttgarter-zeitung.de/media.media.1e3b768d-1b12-4ec8-9a9a-81acd577f20f.original1024.jpg\">Glatteis oder Eisgl&auml;tte</a></br>";
           break;
       case 6:
           $ground="Erdbodenzustand: <a class=\"n\" href=\"https://www.eskp.de/fileadmin/_processed_/5/3/csm_wueste1-imago67813130_l_7bb25800e7.jpg\">loser, trockener Sand</a></br>";
           break;
       case 7:
-          $ground="Erdbodenzustand: geschlossene dünne Sandschicht</br>";
+          $ground="Erdbodenzustand: geschlossene d&uuml;nne Sandschicht</br>";
           break;
       case 8:
           $ground="Erdbodenzustand: geschlossene dicke Sandschicht</br>";
@@ -2050,6 +2072,10 @@ function synop ($fname,$hour,$day,$day_1){
   list ($lclp, $lclt) = drylift($ppp, $T + $ZEROCNK, $Td + $ZEROCNK);
   $lclh=lclheight($T+$ZEROCNK, $lclt,$mr*0.001);
   #$lclh=$lclp;
+
+  #$W1=0;
+  #$W2=0;
+  #$ww=0;
   if (count($global) == "11"){
     $ix=1;
     $ir=1;
@@ -2132,7 +2158,7 @@ function synop ($fname,$hour,$day,$day_1){
   $C1=$C2=$C3=$C4=-99;
   $hh1=$hh2=$hh3=$hh4=-99;
   while($x <= count($sec333)) {
-    if ($sec333[$x][0] == "8") {
+    if ($sec333[$x][0] == "8") { # Notice:  Undefined offset:
       if ($nflag == "1"){
         $N1=$sec333[$x][1];
         $C1=$sec333[$x][2];
@@ -2172,10 +2198,10 @@ function synop ($fname,$hour,$day,$day_1){
   
   if (($ir2 < 2) and ($ir == 3)){
     echo("<b style=\"color:red;\">" . $ir2 . "</b>");
-    $error_message .= "RR-Gruppe fehlt Abschnitt 1 bzw. in der Globalengruppe. Wahrscheinlich m&uuml;sste</br><b>60002 (18z),</br>60001 (12z) oder</br>60007(15z,..)</b> vor die 7er-Grupper.</br></br>Falls du nicht weißt wiso weshalb,</br>dann Bitte den Frühdienst oder das Qualiteam ansprechen.</br></br>";
+    $error_message .= "RR-Gruppe fehlt Abschnitt 1 bzw. in der Globalengruppe. Wahrscheinlich m&uuml;sste</br><b>60002 (18z),</br>60001 (12z) oder</br>60007(15z,..)</b> vor die 7er-Grupper.</br></br>Falls du nicht weißt wiso weshalb,</br>dann Bitte den Fr&uuml;hdienst oder das Qualiteam ansprechen.</br></br>";
   } elseif (($ir2 >= 2) and ($ir == 1)){
     echo("<b style=\"color:red;\">" . $ir2 . "</b>");
-    $error_message .= "Keine RR-Gruppe erwartet, aber trotzdem</br>eine vorhanden in der Globalengruppe!</br>Falls du nicht weißt wiso weshalb,</br>dann Bitte den Frühdienst oder das Qualiteam ansprechen.</br></br>";
+    $error_message .= "Keine RR-Gruppe erwartet, aber trotzdem</br>eine vorhanden in der Globalengruppe!</br>Falls du nicht weißt wiso weshalb,</br>dann Bitte den Fr&uuml;hdienst oder das Qualiteam ansprechen.</br></br>";
   } else {
     echo($ir2);
   }
@@ -2193,7 +2219,7 @@ function synop ($fname,$hour,$day,$day_1){
       list ($ww_3, $W1_3, $W2_3) = getww(sprintf("obs_".$day."%02s.txt", $hour-3));
       list ($ww_4, $W1_4, $W2_4) = getww(sprintf("obs_".$day."%02s.txt", $hour-4));
       list ($ww_5, $W1_5, $W2_5) = getww(sprintf("obs_".$day."%02s.txt", $hour-5));
-      if ((($ix == 2) or ($ix2 == 2)) and ($W1_1 >= 4 or $W1_2 >= 4 or $W1_3 >= 4 or $W1_4 >= 4 or $W1_5 >= 4 or $ww_1 >= 42 or ($ww_1[0] == 2 and $ww_1 != 29 and $ww_1 != 28)) ) {
+      if ((($ix == 2) or ($ix2 == 2)) and ($W1_1 >= 4 or $W1_2 >= 4 or $W1_3 >= 4 or $W1_4 >= 4 or $W1_5 >= 4 or $ww_1 >= 42 or ($ww_1[0] >= 2 and $ww_1 != 29 and $ww_1 != 28)) ) {
         echo("<b style=\"color:orange;\">" . $ix2 . "</b>");
         $error_message .= "7er Gruppe fehlt komplett!</br>In den vergangen 6 Stunden wurde signifikantes Wetter gemeldet.</br>Achtung: ix (gelb markiert) muss dann</br>auf 1 gesetzt werden.</br>";
       } else {
@@ -2291,7 +2317,7 @@ function synop ($fname,$hour,$day,$day_1){
         if (($E ==-9 or $E =="/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9) or ($E_strich == "/"))){
           echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E . "</b>" . substr($sec333[$iter_333], -3) . " ");
           $error_message .= "Erdbodenzustand fehlt.</br>";
-        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){ #case E und E' gemeldet, aber unter E' über 50% snowcover 
+        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){ #case E und E' gemeldet, aber unter E' &uuml;ber 50% snowcover 
           if ($SSS == "998"){ #zusätzlich noch 998 (Reste) gemeldet, also komplett alles durch einanader.
             echo($sec333[$iter_333] . " ");
           }else{
@@ -2349,7 +2375,7 @@ function synop ($fname,$hour,$day,$day_1){
       } elseif ( ($sec333[$iter_333][0] == "4") and (($hour % 6) == 0) ){
         if (($E == "/") and (($E_strich == 1) or ($E_strich == 5) or ($E_strich == -9))){
           echo($sec333[$iter_333][0] . "<b style=\"color:red;\">" . $E_strich . "</b>" . substr($sec333[$iter_333], -3) . " ");
-        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){ #case E und E' gemeldet, aber unter E' über 50% snowcover
+        } elseif (($E !=-9 and $E !="/") and (($E_strich != 1) and ($E_strich != 5) and ($E_strich != "/") and ($E_strich != -9)) ){ #case E und E' gemeldet, aber unter E' &uuml;ber 50% snowcover
           if ($SSS == "998"){ #zusätzlich noch 998 (Reste) gemeldet, also komplett alles durch einanader.
             echo("<b style=\"color:red;\">" . $sec333[$iter_333] . "</b> ");
             $error_message .= "E' passt nicht zu E und Schneeh&ouml;he <a href=\"fm12.html#34\">sss</a>=998!</br><a href=\"fm12.html#34\">sss</a>=998 bedeutet Reste oder Flecken,</br>aber unter E' wurde eine Schneedecke &uuml;ber 50% Bedeckung gemeldet.</br>Wahrscheinlich soll E'=1 oder E'=/ sein.";
