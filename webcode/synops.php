@@ -29,13 +29,13 @@
           echo("\n  <tr class=\"sn\" >\n    <td>\n     <b>Hour:  ". $x . " UTC</b></br>");
         }
         try {
-          synop(sprintf("examplereports/obs_07%02s.txt", $x),$x,$day,$day_1);
+          synop(sprintf("./examplereports/obs_07%02s.txt", $x),$x,$day,$day_1);
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
             echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 has been submitted too late!</b>";
           } else {
             echo "<h3>Fatal Error occurred!</h3>\n </br></br><b class=\"sm\"> Error message: ",  $e->getMessage(), "</b></br>\n";
-            echo "<b>If you don't know why this happend, send a message to quali@met.fu-berln.de.</b></br>\n";
+            echo "<b>If you don't know why this happened, send a message to quali@met.fu-berln.de.</b></br>\n";
             echo "<b>Report program errors to https://github.com/mammatus95/Synopstalking/issues</b></br></br>\n";
           }
         }

@@ -16,7 +16,7 @@ jobs:
         python-version: '3.11'
     - name: Install codespell
       run: |
-        ls
+        ls webcode
         pip3 install codespell
           
     - name: Run codespell for synops.php
