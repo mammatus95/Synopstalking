@@ -29,7 +29,14 @@
           echo("\n  <tr class=\"sn\" >\n    <td>\n     <b>Hour:  ". $x . " UTC</b></br>");
         }
         try {
-          synop(sprintf("./examplereports/obs_07%02s.txt", $x),$x,$day,$day_1);
+          $file_path = sprintf("./examplereports/obs_07%02s.txt", $x);
+          if (file_exists($file_path)) {
+            synop($file_path,$x,$day,$day_1);
+          } else {
+            $file_path = sprintf("/home/runner/work/Synopstalking/Synopstalking/webcode/examplereports/obs_07%02s.txt", $x);
+            synop($file_path,$x,$day,$day_1);
+          }
+          
         } catch (Exception $e) {
           if ( $e->getMessage() == "NIL"){
             echo "<b class=\"sm\">", $e->getMessage(),"  The FM12 has been submitted too late!</b>";
