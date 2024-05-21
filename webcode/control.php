@@ -20,6 +20,7 @@ function test_8333($N1,$N2,$N3,$N4,$C1,$C2,$C3,$C4,$h,$hh1,$hh2,$hh3,$hh4,$N,$Nh
     $fN1 = "<b class=\"warn\">" . $N1 . "</b>";
     $error_message .= "7/8 Cu ist eig. 7/8 Sc</br>";
   }
+
   if (($C2 == 8) and ($N2 >= 7)){
     $fC2 = "<b class=\"warn\">" . $C2 . "</b>";
     $fN2 = "<b class=\"warn\">" . $N2 . "</b>";
@@ -1302,7 +1303,7 @@ function rr1h($rr,$h,$d) {
     #$RR="< 0.05 mm";
     if (($h % 2)==0){ #} ("14" == $h){
       if (($week % 2)==0){
-        $RR="<a class=\"n\" href=\"https://grid.gograph.com/zornige-biene-zeichen-EPS-Vektor_gg66439901.jpg\">Ne Biene durch geflogen.</a>";
+        $RR="<a class=\"n\" href=\"https://banner2.cleanpng.com/20191004/eaa/transparent-bumblebee-5da391088c8718.8444133415710005845756.jpg\">Ne Biene durch geflogen.</a>";
       } else {
         $RR="<a class=\"n\" href=\"https://image.spreadshirtmedia.net/image-server/v1/mp/compositions/T813A1MPA3803PT17X4Y92D161795900FS2655/views/1,width=550,height=550,appearanceId=1,backgroundColor=FFFFFF,noPt=true,version=1574077764/dicke-lachende-biene-auf-pollen-suche-geschenkidee-frauen-premium-t-shirt.jpg\">Ne Biene durch geflogen.</a>";
       }

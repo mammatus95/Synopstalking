@@ -1,9 +1,6 @@
 name: PHP Code Check
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request_target]
 
 jobs:
   code-check:

@@ -1,9 +1,7 @@
 name: Spellcheck PHP files
 
 on:
-  push:
-    branches:
-      - master
+  push: [push, pull_request_target]
 
 jobs:
   spellcheck:
